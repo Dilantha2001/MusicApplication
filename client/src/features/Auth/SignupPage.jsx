@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useRegisterUserMutation } from "./authApiSlice";
@@ -7,8 +7,6 @@ import { AiOutlineEyeInvisible, AiOutlineEye } from "react-icons/ai";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { signUpSchema } from "../../utils/schema";
 import { Helmet } from "react-helmet-async";
-import ReCAPTCHA from "react-google-recaptcha";
-const sitekey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
 const SignupPage = () => {
   const selectedTheme = useSelector((state) => state.theme);
@@ -22,7 +20,6 @@ const SignupPage = () => {
   });
   const [validationErrors, setValidationErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const recaptchaRef = useRef();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,9 +40,7 @@ const SignupPage = () => {
     }
 
     try {
-      const recaptchaToken = await recaptchaRef.current.executeAsync();
-      recaptchaRef.current.reset();
-      const { error } = await signUp({ ...formData, recaptchaToken });
+      const { error } = await signUp(formData);
       if (error) {
         console.error(error);
       } else {
@@ -174,37 +169,12 @@ const SignupPage = () => {
                     `Sign up`
                   )}
                 </button>
-                <div className="text-xs mt-2">
-                  This site is protected by reCAPTCHA and the Google{" "}
-                  <a
-                    href="https://policies.google.com/privacy"
-                    className="text-blue-300 hover:decoration-blue-300 hover:underline"
-                  >
-                    Privacy Policy
-                  </a>{" "}
-                  and{" "}
-                  <a
-                    href="https://policies.google.com/terms"
-                    className="text-blue-300 hover:decoration-blue-300 hover:underline"
-                  >
-                    Terms of Service
-                  </a>{" "}
-                  apply.
-                </div>
                 {isError && (
                   <span className="block text-sm mt-2 saturate-100 text-red-500">
                     {error?.data?.message ||
                       error?.data?.error?.details[0].message}
                   </span>
                 )}
-                <div className="mt-2 text-xs">
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    sitekey={sitekey}
-                    size="invisible"
-                    theme="dark"
-                  />
-                </div>
               </div>
               <div className="text-center">
                 <span>Already have an account?</span>{" "}

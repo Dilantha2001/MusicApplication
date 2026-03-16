@@ -35,7 +35,7 @@ const SongsPage = () => {
     <section className="text-gray-100">
       <Helmet prioritizeSeoTags>
         <title>{`Explore - Jollify`}</title>
-        <link rel="canonical" href={`https://jollify.vercel.app/explore`} />
+        <link rel="canonical" href={`http://localhost:4000`} />
         <meta
           name="description"
           content={`Browse amazing collection of songs on Jollify`}

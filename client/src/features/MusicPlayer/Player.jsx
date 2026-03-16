@@ -27,7 +27,6 @@ import { convertSecondsToTime } from "../../utils";
 import AudioPlayer from "./AudioPlayer";
 import LikeButton from "../../components/LikeButton";
 import AddToPlaylistButton from "../../components/AddToPlaylistButton";
-const key = import.meta.env.VITE_JOLLIFY_KEY;
 
 const Player = () => {
   const selectedTheme = useSelector((state) => state.theme);
@@ -48,8 +47,8 @@ const Player = () => {
 
   const audioURL = currentSong?.audioURL ?? null;
   useEffect(() => {
-    if (audioRef?.current) {
-      audioRef.current.src = "https://" + key + "/" + audioURL;
+    if (audioRef?.current && audioURL) {
+      audioRef.current.src = audioURL;
       audioRef.current.load();
       audioRef.current.currentTime = 0;
       dispatch(setCurrentTime(audioRef.current.currentTime));

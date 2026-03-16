@@ -34,14 +34,14 @@ const SongPage = () => {
             <title>{`${song.artiste.name} - ${song.title} MP3 Stream on Jollify`}</title>
             <link
               rel="canonical"
-              href={`https://jollify.vercel.app/songs/${song._id}`}
+              href={`http://localhost:4000/api/songs/${song._id}`}
             />
             <meta
               name="description"
               content={`Stream ${song.title} by ${
                 song.artiste.name
               } on Jollify and enjoy other amazing music collections. Released ${formatDate(
-                song.releaseDate
+                song.releaseDate,
               )}`}
             />
             <meta
@@ -53,7 +53,7 @@ const SongPage = () => {
               content={`Stream ${song.title} by ${
                 song.artiste.name
               } on Jollify and enjoy other amazing music collections. Released ${formatDate(
-                song.releaseDate
+                song.releaseDate,
               )}`}
             />
             <meta property="og:image" content={song.coverImage || ""} />
@@ -71,7 +71,7 @@ const SongPage = () => {
               content={`Stream ${song.title} by ${
                 song.artiste.name
               } on Jollify and enjoy other amazing music collections. Released ${formatDate(
-                song.releaseDate
+                song.releaseDate,
               )}`}
             />
             <meta name="twitter:image" content={song.coverImage || ""} />

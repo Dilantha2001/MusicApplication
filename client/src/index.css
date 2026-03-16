@@ -1,7 +1,4 @@
 @tailwind base;
 @tailwind components;
 
-.grecaptcha-badge {
-  visibility: hidden;
-}
 @tailwind utilities;

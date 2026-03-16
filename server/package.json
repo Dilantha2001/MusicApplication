@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
+    "seed": "node seed.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -32,11 +33,6 @@
     "mongodb": "^5.7.0",
     "mongoose": "^7.4.3",
     "multer": "^1.4.5-lts.1",
-    "node-fetch": "^2.7.0",
-    "passport": "^0.6.0",
-    "passport-facebook": "^3.0.0",
-    "passport-google-oauth20": "^2.0.0",
-    "passport-twitter": "^1.0.4",
     "sitemap": "^7.1.1"
   },
   "devDependencies": {
