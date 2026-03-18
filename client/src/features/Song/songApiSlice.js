@@ -3,7 +3,13 @@ import { apiSlice } from "../../app/apiSlice";
 export const songApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllSongs: builder.query({
-      query: ({ page, limit }) => `/api/songs?page=${page}&limit=${limit}`,
+      query: ({ page, limit }) => {
+        const params = new URLSearchParams();
+        if (page) params.append("page", page);
+        if (limit) params.append("limit", limit);
+        const queryString = params.toString();
+        return queryString ? `/api/songs?${queryString}` : "/api/songs";
+      },
     }),
     getSongDetails: builder.query({
       query: (songId) => `/api/songs/${songId}`,
@@ -13,7 +19,9 @@ export const songApiSlice = apiSlice.injectEndpoints({
       query: () => "/api/songs/any",
     }),
     getTopSongs: builder.query({
-      query: (limit) => `/api/songs/top?limit=${limit}`,
+      query: (limit) => {
+        return limit ? `/api/songs/top?limit=${limit}` : "/api/songs/top";
+      },
     }),
     likeSong: builder.mutation({
       query: ({ songId }) => ({
@@ -29,7 +37,7 @@ export const songApiSlice = apiSlice.injectEndpoints({
             } else {
               draft.likes = draft.likes.filter((e) => !(e === userId));
             }
-          })
+          }),
         );
         try {
           await queryFulfilled;

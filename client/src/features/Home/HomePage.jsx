@@ -28,7 +28,7 @@ const HomePage = () => {
   return (
     <>
       <Helmet>
-        <title>Jollify</title>
+        <title>Neon Music</title>
         <link rel="canonical" href="https://jollify.vercel.app" />
       </Helmet>
       <Search />

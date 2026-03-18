@@ -3,7 +3,9 @@ import { apiSlice } from "../../app/apiSlice";
 const albumApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllAlbums: builder.query({
-      query: (limit) => `/api/albums?limit=${limit}`,
+      query: (limit) => {
+        return limit ? `/api/albums?limit=${limit}` : "/api/albums";
+      },
     }),
     getAlbumDetails: builder.query({
       query: (albumId) => `/api/albums/${albumId}`,
@@ -22,7 +24,7 @@ const albumApiSlice = apiSlice.injectEndpoints({
             } else {
               draft.likes = draft.likes.filter((e) => !(e === userId));
             }
-          })
+          }),
         );
         try {
           await queryFulfilled;

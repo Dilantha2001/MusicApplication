@@ -3,7 +3,10 @@ import { apiSlice } from "../../app/apiSlice";
 const playlistApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllPlaylists: builder.query({
-      query: (limit) => `/api/playlists?limit=${limit}`,
+      query: (limit) => {
+        const limitParam = limit ? `?limit=${limit}` : "";
+        return `/api/playlists${limitParam}`;
+      },
       providesTags: (result) =>
         result
           ? [
@@ -41,7 +44,7 @@ const playlistApiSlice = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(
         { playlistId, userId },
-        { dispatch, queryFulfilled }
+        { dispatch, queryFulfilled },
       ) {
         const patchResult = dispatch(
           apiSlice.util.updateQueryData(
@@ -54,8 +57,8 @@ const playlistApiSlice = apiSlice.injectEndpoints({
               } else {
                 draft.likes = draft.likes.filter((e) => !(e === userId));
               }
-            }
-          )
+            },
+          ),
         );
         try {
           await queryFulfilled;

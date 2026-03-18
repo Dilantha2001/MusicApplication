@@ -18,9 +18,25 @@ connectDB();
 
 app.use(
   cors({
-    origin: ["https://jollify.vercel.app", "http://localhost:5173"],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      // Also allow localhost for development
+      if (
+        !origin ||
+        origin === "https://jollify.vercel.app" ||
+        origin === "http://localhost:5173" ||
+        origin.startsWith("http://localhost:")
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
-  })
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+    exposedHeaders: ["Set-Cookie"],
+  }),
 );
 app.use(cookieParser());
 app.use(express.json());

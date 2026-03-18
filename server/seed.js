@@ -11,7 +11,7 @@ mongoose.connect(process.env.DB_STRING || process.env.DB_URL, {
   useUnifiedTopology: true,
 });
 
-// අපි Database එකට දාන්න යන සිංදු ලිස්ට් එක
+// අපි Database එට දාන්න යන සිංදු ලිස්ට් එක
 const artists = [
   "The Weeknd",
   "Taylor Swift",
@@ -99,15 +99,98 @@ const importData = async () => {
     const db = mongoose.connection;
 
     // කලින් දාපු පරණ සිංදු තියෙනවා නම් ඒ ටික ඔක්කොම මකනවා (එතකොට Duplicate වෙන්නේ නෑ)
-    console.log("Clearing old songs...");
+    console.log("Clearing old songs, albums, artistes, and playlists...");
     await db.collection("songs").deleteMany({});
+    await db.collection("albums").deleteMany({});
+    await db.collection("artistes").deleteMany({});
+    await db.collection("playlists").deleteMany({});
 
     // අලුතින් හදපු සිංදු 100 ඇතුළත් කරනවා
     console.log("Inserting 100 trending songs...");
     const hundredSongs = generate100Songs();
-    await db.collection("songs").insertMany(hundredSongs);
+    const songsResult = await db.collection("songs").insertMany(hundredSongs);
+    const songIds = Object.values(songsResult.insertedIds);
 
-    console.log("✅ 100 Songs Imported Successfully! 🚀");
+    // Create artistes from the artists array
+    console.log("Creating artistes...");
+    const artisteDocs = artists.map((name, index) => ({
+      name: name,
+      image: images[index % images.length],
+      bio: `This is the bio for ${name}, one of the most popular artists in the world.`,
+      likes: [],
+    }));
+    const artistesResult = await db
+      .collection("artistes")
+      .insertMany(artisteDocs);
+    const artisteIds = Object.values(artistesResult.insertedIds);
+
+    // Create albums linked to artistes
+    console.log("Creating albums...");
+    const albumDocs = [];
+    for (let i = 0; i < 15; i++) {
+      albumDocs.push({
+        title: `${artists[i % artists.length]} - Album ${Math.floor(i / 15) + 1}`,
+        artiste: artisteIds[i % artisteIds.length],
+        coverImage: images[i % images.length],
+        releaseDate: new Date(),
+        genre: ["Pop", "R&B", "Hip Hop", "Rock", "Electronic"][i % 5],
+        songs: songIds.slice(i * 6, i * 6 + 6),
+        likes: [],
+      });
+    }
+    await db.collection("albums").insertMany(albumDocs);
+
+    // Create playlists
+    console.log("Creating playlists...");
+    const playlistDocs = [
+      {
+        title: "Top Hits 2024",
+        description: "The hottest tracks of the year",
+        coverImage: images[0],
+        createdBy: null,
+        songs: songIds.slice(0, 10),
+        likes: [],
+      },
+      {
+        title: "Chill Vibes",
+        description: "Relax and unwind with these smooth tracks",
+        coverImage: images[1],
+        createdBy: null,
+        songs: songIds.slice(10, 20),
+        likes: [],
+      },
+      {
+        title: "Workout Motivation",
+        description: "Pump up your workout session",
+        coverImage: images[2],
+        createdBy: null,
+        songs: songIds.slice(20, 30),
+        likes: [],
+      },
+      {
+        title: "Party Anthems",
+        description: "Get the party started!",
+        coverImage: images[3],
+        createdBy: null,
+        songs: songIds.slice(30, 40),
+        likes: [],
+      },
+      {
+        title: "Late Night Feels",
+        description: "Perfect for those late night drives",
+        coverImage: images[4],
+        createdBy: null,
+        songs: songIds.slice(40, 50),
+        likes: [],
+      },
+    ];
+    await db.collection("playlists").insertMany(playlistDocs);
+
+    console.log("✅ Data Imported Successfully! 🚀");
+    console.log("   - 100 Songs");
+    console.log("   - 15 Artistes");
+    console.log("   - 15 Albums");
+    console.log("   - 5 Playlists");
     process.exit();
   } catch (error) {
     console.error(`❌ Error with data import: ${error.message}`);

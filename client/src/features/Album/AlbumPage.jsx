@@ -25,7 +25,7 @@ const AlbumPage = () => {
     }
   });
 
-  if (isLoading) {
+  if (isLoading || !album) {
     return <Loading />;
   }
   if (isError) {
@@ -45,7 +45,7 @@ const AlbumPage = () => {
           content={`Stream ${album.title} by ${
             album.artiste.name
           } on Jollify and enjoy other amazing music collections. Released ${formatDate(
-            album.releaseDate
+            album.releaseDate,
           )}`}
         />
         <meta
@@ -57,7 +57,7 @@ const AlbumPage = () => {
           content={`Stream ${album.title} by ${
             album.artiste.name
           } on Jollify and enjoy other amazing music collections. Released ${formatDate(
-            album.releaseDate
+            album.releaseDate,
           )}`}
         />
         <meta property="og:image" content={album.coverImage || ""} />
@@ -75,7 +75,7 @@ const AlbumPage = () => {
           content={`Stream ${album.title} by ${
             album.artiste.name
           } on Jollify and enjoy other amazing music collections. Released ${formatDate(
-            album.releaseDate
+            album.releaseDate,
           )}`}
         />
         <meta name="twitter:image" content={album.coverImage || ""} />

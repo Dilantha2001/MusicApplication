@@ -20,7 +20,7 @@ const PlaylistPage = () => {
   } = useGetPlaylistDetailsQuery(id);
   const navigate = useNavigate();
 
-  if (isLoading) {
+  if (isLoading || !playlist) {
     return <Loading />;
   }
   if (isError) {

@@ -3,7 +3,9 @@ import { apiSlice } from "../../app/apiSlice";
 const artisteApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllArtistes: builder.query({
-      query: (limit) => `/api/artistes?limit=${limit}`,
+      query: (limit) => {
+        return limit ? `/api/artistes?limit=${limit}` : "/api/artistes";
+      },
     }),
     getArtisteDetails: builder.query({
       query: (artisteId) => `/api/artistes/${artisteId}`,
@@ -15,7 +17,7 @@ const artisteApiSlice = apiSlice.injectEndpoints({
       }),
       async onQueryStarted(
         { artisteId, userId },
-        { dispatch, queryFulfilled }
+        { dispatch, queryFulfilled },
       ) {
         const patchResult = dispatch(
           apiSlice.util.updateQueryData(
@@ -27,11 +29,11 @@ const artisteApiSlice = apiSlice.injectEndpoints({
                 draft.artiste.likes = [...draft.artiste.likes, userId];
               } else {
                 draft.artiste.likes = draft.artiste.likes.filter(
-                  (e) => !(e === userId)
+                  (e) => !(e === userId),
                 );
               }
-            }
-          )
+            },
+          ),
         );
         try {
           await queryFulfilled;

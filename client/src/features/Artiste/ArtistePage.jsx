@@ -19,7 +19,7 @@ const ArtistePage = () => {
     }
   });
 
-  if (isLoading) {
+  if (isLoading || !data) {
     return <Loading />;
   }
   if (isError) {

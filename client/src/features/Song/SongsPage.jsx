@@ -24,7 +24,7 @@ const SongsPage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.search]);
 
-  if (isLoading) {
+  if (isLoading || !songs) {
     return <Loading />;
   }
   if (isError) {

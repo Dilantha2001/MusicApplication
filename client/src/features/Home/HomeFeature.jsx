@@ -23,72 +23,116 @@ const HomeFeature = () => {
   };
 
   return (
-    <section className="relative mt-8 text-gray-200">
-      <h2 className="text-2xl font-bold mb-4">Featured for you</h2>
+    <section className="relative mt-10 text-gray-200">
+      {/* Section label */}
+      <div className="mb-5">
+        <p className="text-[10px] uppercase tracking-[0.25em] text-gray-500 font-semibold mb-1">
+          Picked for you
+        </p>
+        <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white leading-none">
+          Featured
+        </h2>
+      </div>
+
+      {/* Loading */}
       {isLoading ? (
-        <div className="flex-grow flex justify-center items-center h-36 md:h-40">
-          <AiOutlineLoading className="text-3xl animate-spin" />
+        <div className="flex justify-center items-center h-52 rounded-2xl bg-white/[0.03] ring-1 ring-white/[0.06]">
+          <AiOutlineLoading className="text-3xl animate-spin text-gray-600" />
         </div>
       ) : isError ? (
-        <div className="flex-grow h-36 md:h-40">
+        <div className="h-52">
           <ErrorMsg error={error} />
         </div>
       ) : (
-        <div className="rounded-lg overflow-hidden shadow-[0px_20px_30px_-10px_rgba(0,0,0,0.3)] shadow-primary">
-          <article
-            className={`rounded-lg h-52 text-white overflow-hidden bg-${selectedTheme} transition transform flex lg:flex-row-reverse lg:justify-between`}
-          >
-            <div className="hidden lg:flex items-center relative w-1/2 rounded-l-lg">
-              <img
-                src={song?.artiste.image}
-                alt={song?.artiste.name}
-                className="object-cover w-full bg-center"
-              />
-              <div
-                className={`absolute top-0 right-0 bottom-0 left-0 bg-gradient-to-r from-${selectedTheme} to-transparent`}
-              ></div>
-            </div>
-            <div className="flex flex-col justify-between p-6 md:p-12 w-full">
-              <div>
-                <h2 className="text-2xl font-semibold mb-2 truncate ...">
-                  <Link
-                    to={`/artistes/${song?.artiste._id}`}
-                    className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-white`}
-                  >
-                    {song?.artiste.name}
-                  </Link>{" "}
-                  <span className="text-gray-300">in</span>{" "}
-                  <Link
-                    to={`/albums/${song?.album._id}`}
-                    className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-white`}
-                  >
-                    {song?.album.title}
-                  </Link>
-                </h2>
-                <h3 className="text-xl font-semibold mb-4">
-                  <Link
-                    to={`/songs/${song._id}`}
-                    className={`hover:underline hover:decoration-2 hover:underline-offset-4 hover:decoration-white`}
-                  >
-                    {song?.title}
-                  </Link>
-                </h3>
-              </div>
-              <div className="flex items-center gap-6">
-                <button
-                  onClick={handlePlay}
-                  className="text-outline-gray hover:text-secondary-500"
-                  title="Play"
+        <article className="relative rounded-2xl overflow-hidden h-56 md:h-64 flex">
+          {/* ── Background: blurred artist image ── */}
+          <div className="absolute inset-0">
+            <img
+              src={song?.artiste.image}
+              alt={song?.artiste.name}
+              className="w-full h-full object-cover object-center scale-110"
+            />
+            {/* Multi-layer overlay for depth */}
+            <div className="absolute inset-0 bg-black/60" />
+            <div className={`absolute inset-0 bg-${selectedTheme}/30`} />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-transparent" />
+          </div>
+
+          {/* ── Sharp artist image on the right (large screens) ── */}
+          <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-2/5">
+            <img
+              src={song?.artiste.image}
+              alt={song?.artiste.name}
+              className="w-full h-full object-cover object-top"
+            />
+            {/* Fade into the dark overlay from left */}
+            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
+          </div>
+
+          {/* ── Content ── */}
+          <div className="relative z-10 flex flex-col justify-between p-6 md:p-10 w-full lg:w-3/5">
+            {/* Top: meta */}
+            <div className="flex flex-col gap-1">
+              <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-semibold">
+                Featured Track
+              </p>
+              <h2 className="text-xl md:text-2xl font-black leading-tight text-white truncate">
+                <Link
+                  to={`/artistes/${song?.artiste._id}`}
+                  className="hover:underline decoration-2 underline-offset-4 decoration-white/60 transition-colors hover:text-white/80"
                 >
-                  <FaPlay className="text-base md:text-2xl" />
-                </button>
-                <span className="bg-secondary-400 text-white text-lg md:text-2xl rounded-full p-2">
-                  <LikeButton songId={song._id} type={"song"} />
-                </span>
+                  {song?.artiste.name}
+                </Link>
+                <span className="text-white/30 font-normal mx-2">·</span>
+                <Link
+                  to={`/albums/${song?.album._id}`}
+                  className="text-white/60 font-semibold hover:text-white/90 hover:underline decoration-2 underline-offset-4 decoration-white/40 transition-colors"
+                >
+                  {song?.album.title}
+                </Link>
+              </h2>
+              <Link
+                to={`/songs/${song._id}`}
+                className={`text-base md:text-lg font-semibold text-${selectedTheme} hover:underline decoration-2 underline-offset-4 transition-colors truncate`}
+              >
+                {song?.title}
+              </Link>
+            </div>
+
+            {/* Bottom: actions */}
+            <div className="flex items-center gap-4">
+              {/* Play button */}
+              <button
+                onClick={handlePlay}
+                className={`
+                  flex items-center justify-center
+                  w-11 h-11 rounded-full
+                  bg-white text-black
+                  hover:scale-105 active:scale-95
+                  transition-transform duration-150 shadow-lg shadow-black/40
+                `}
+                title="Play"
+              >
+                <FaPlay className="text-sm translate-x-[1px]" />
+              </button>
+
+              {/* Like button */}
+              <div
+                className={`
+                  flex items-center justify-center
+                  w-11 h-11 rounded-full
+                  bg-white/10 backdrop-blur-sm
+                  ring-1 ring-white/10
+                  hover:bg-white/20 hover:scale-105 active:scale-95
+                  transition-all duration-150
+                `}
+              >
+                <LikeButton songId={song._id} type={"song"} />
               </div>
             </div>
-          </article>
-        </div>
+          </div>
+        </article>
       )}
     </section>
   );
