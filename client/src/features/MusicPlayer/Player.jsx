@@ -45,7 +45,7 @@ const Player = () => {
   const audioRef = useRef(null);
   const [isLoading, setIsLoading] = useState();
 
-  const audioURL = currentSong?.audioURL ?? null;
+  const audioURL = currentSong?.audioURL ?? currentSong?.songUrl ?? null;
   useEffect(() => {
     if (audioRef?.current && audioURL) {
       audioRef.current.src = audioURL;
