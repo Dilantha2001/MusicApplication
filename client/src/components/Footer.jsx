@@ -21,7 +21,7 @@ const Footer = () => {
           </a>
           <span className={`hover:text-${selectedTheme}-50`}>Privacy</span>
         </nav>
-        <p className="text-gray-400">© 2023 Jollify. All rights reserved.</p>
+        <p className="text-gray-400">© 2023 Neon Music. All rights reserved.</p>
       </footer>
     </>
   );

@@ -97,7 +97,7 @@ const generate100Songs = () => {
       coverImage: cover,
       audioURL: audioUrl,
       releaseDate: releaseDate,
-      lyrics: `[Verse 1]\nThis is auto-generated trending song number ${i}.\nMusic is life, enjoy the vibe!\n\n[Chorus]\nOh yeah, we are streaming on Jollify!\nLet the beat drop!`,
+      lyrics: `[Verse 1]\nThis is auto-generated trending song number ${i}.\nMusic is life, enjoy the vibe!\n\n[Chorus]\nOh yeah, we are streaming on Neon Music!\nLet the beat drop!`,
       comments: [],
     });
   }

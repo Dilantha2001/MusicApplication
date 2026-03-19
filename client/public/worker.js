@@ -1,4 +1,4 @@
-const CACHE_NAME = "jollify";
+const CACHE_NAME = "neon-music";
 const urlsToCache = ["/", "/explore", "/playlists", "/artistes", "/albums"];
 
 // Install a service worker
@@ -8,7 +8,7 @@ self.addEventListener("install", (event) => {
     caches.open(CACHE_NAME).then(function (cache) {
       console.log("Opened cache");
       return cache.addAll(urlsToCache);
-    })
+    }),
   );
 });
 
@@ -21,13 +21,13 @@ self.addEventListener("fetch", (event) => {
         return response;
       }
       return fetch(event.request);
-    })
+    }),
   );
 });
 
 // Update a service worker
 self.addEventListener("activate", (event) => {
-  const cacheWhitelist = ["jollify"];
+  const cacheWhitelist = ["neon-music"];
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -35,8 +35,8 @@ self.addEventListener("activate", (event) => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
             return caches.delete(cacheName);
           }
-        })
+        }),
       );
-    })
+    }),
   );
 });

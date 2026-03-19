@@ -33,7 +33,7 @@ const SignupPage = () => {
     if (error) {
       const errors = {};
       error.details.forEach(
-        (detail) => (errors[detail.path[0]] = detail.message)
+        (detail) => (errors[detail.path[0]] = detail.message),
       );
       setValidationErrors(errors);
       return;
@@ -54,25 +54,25 @@ const SignupPage = () => {
   return (
     <section className=" text-gray-100 h-full">
       <Helmet prioritizeSeoTags>
-        <title>{`Sign up - Jollify`}</title>
-        <link rel="canonical" href={`https://jollify.vercel.app/signup`} />
+        <title>{`Sign up - Neon Music`}</title>
+        <link rel="canonical" href={`https://neon-music.vercel.app/signup`} />
         <meta
           name="description"
-          content={`Sign up to enjoy exclusive content and features on Jollify. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected.`}
+          content={`Sign up to enjoy exclusive content and features on Neon Music. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected.`}
         />
-        <meta property="og:title" content="Sign up - Jollify" />
+        <meta property="og:title" content="Sign up - Neon Music" />
         <meta
           property="og:url"
-          content={`https://jollify-server.vercel.app/signup`}
+          content={`https://neon-music-server.vercel.app/signup`}
         />
         <meta
           property="og:description"
-          content={`Sign up to enjoy exclusive content and features on Jollify. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected.`}
+          content={`Sign up to enjoy exclusive content and features on Neon Music. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected.`}
         />
-        <meta name="twitter:title" content="Sign up - Jollify" />
+        <meta name="twitter:title" content="Sign up - Neon Music" />
         <meta
           name="twitter:description"
-          content="Sign up to enjoy exclusive content and features on Jollify. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected."
+          content="Sign up to enjoy exclusive content and features on Neon Music. Discover new music, create playlists, and connect with other music lovers. Our secure sign-up process ensures that your personal information is protected."
         />
       </Helmet>
       <div className="flex flex-col justify-center h-full max-w-[450px] m-auto">
@@ -83,7 +83,7 @@ const SignupPage = () => {
             <span className=" filter-none">
               <FaMusic className={`text-${selectedTheme} `} />
             </span>
-            <span className="saturate-200">Jollify</span>
+            <span className="saturate-200">Neon Music</span>
           </span>
           <h1 className="text-4xl md:text-6xl font-bold">Sign up</h1>
         </div>

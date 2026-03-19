@@ -17,7 +17,7 @@ const FavoritesPage = () => {
   return (
     <section className="text-gray-100 h-full">
       <Helmet>
-        <title>Favorites - Jollify</title>
+        <title>Favorites - Neon Music</title>
       </Helmet>
       <h1 className="text-xl md:text-3xl font-semibold mb-4">Favorites</h1>
 

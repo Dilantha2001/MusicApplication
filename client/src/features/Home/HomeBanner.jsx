@@ -17,7 +17,7 @@ const HomeBanner = () => {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="relative h-[420px] md:h-[480px] rounded-3xl overflow-hidden flex items-end"
       style={{
-        backgroundImage: `url("https://res.cloudinary.com/ojigs/image/upload/v1698508697/Jollify/jollify_bg_o1mvww.webp")`,
+        backgroundImage: `url("https://res.cloudinary.com/ojigs/image/upload/v1698508697/NeonMusic/neon_music_bg.webp")`,
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
@@ -83,7 +83,7 @@ const HomeBanner = () => {
             transition={{ delay: 0.25, duration: 0.5, ease: "easeOut" }}
             className="text-sm md:text-base text-white/50 max-w-sm leading-relaxed"
           >
-            Explore the latest songs, albums, and playlists on Jollify
+            Explore the latest songs, albums, and playlists on Neon Music
           </motion.p>
         </div>
 

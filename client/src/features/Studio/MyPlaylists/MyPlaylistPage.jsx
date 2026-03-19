@@ -41,7 +41,7 @@ const MyPlaylistPage = () => {
   return (
     <section className="text-gray-100">
       <Helmet>
-        <title>My Playlists - Jollify</title>
+        <title>My Playlists - Neon Music</title>
       </Helmet>
       <h1 className="text-xl md:text-3xl font-semibold mb-8">My Playlist</h1>
       <motion.div

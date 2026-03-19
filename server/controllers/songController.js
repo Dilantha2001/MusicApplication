@@ -177,7 +177,7 @@ const uploadSong = asyncHandler(async (req, res) => {
   // Upload audio (Cloudinary uses resource_type "video" for audio files)
   const audioResult = await uploadToCloudinary(req.files.audio[0].buffer, {
     resource_type: "video",
-    folder: "jollify/audio",
+    folder: "neon-music/audio",
   });
 
   // Upload cover image if provided
@@ -185,7 +185,7 @@ const uploadSong = asyncHandler(async (req, res) => {
   if (req.files?.coverImage) {
     const coverResult = await uploadToCloudinary(
       req.files.coverImage[0].buffer,
-      { resource_type: "image", folder: "jollify/covers" },
+      { resource_type: "image", folder: "neon-music/covers" },
     );
     coverImageUrl = coverResult.secure_url;
   }

@@ -66,7 +66,7 @@ const editUserDetails = asyncHandler(async (req, res) => {
   const updatedUser = await User.findByIdAndUpdate(
     userId,
     { bio, country, image },
-    { new: true }
+    { new: true },
   );
   if (!updatedUser) {
     return res
@@ -89,7 +89,7 @@ const uploadImage = asyncHandler(async (req, res) => {
   if (!publicId) {
     const result = await cloudinary.uploader.upload(req.file.path, {
       transformation: [{ quality: "auto", width: 200, height: 200 }],
-      folder: "jollify",
+      folder: "neon-music",
     });
     await user.updateOne({ image: result.secure_url });
   } else {
@@ -97,7 +97,7 @@ const uploadImage = asyncHandler(async (req, res) => {
       public_id: publicId,
       overwrite: true,
       transformation: [{ quality: "auto", width: 200, height: 200 }],
-      folder: "jollify",
+      folder: "neon-music",
     });
     await user.updateOne({ image: result.secure_url });
   }

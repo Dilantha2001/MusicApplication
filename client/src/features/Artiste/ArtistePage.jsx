@@ -29,36 +29,36 @@ const ArtistePage = () => {
   return (
     <section className=" text-gray-200">
       <Helmet prioritizeSeoTags>
-        <title>{`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Jollify`}</title>
+        <title>{`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Neon Music`}</title>
         <link
           rel="canonical"
-          href={`https://jollify.vercel.app/artistes/${data.artiste._id}`}
+          href={`https://neon-music.vercel.app/artistes/${data.artiste._id}`}
         />
         <meta
           name="description"
-          content={`Stream ${data.artiste.name}'s latest songs and albums on Jollify and enjoy other amazing music collections.`}
+          content={`Stream ${data.artiste.name}'s latest songs and albums on Neon Music and enjoy other amazing music collections.`}
         />
         <meta
           property="og:title"
-          content={`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Jollify`}
+          content={`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Neon Music`}
         />
         <meta
           property="og:description"
-          content={`Stream ${data.artiste.name}'s latest songs and albums on Jollify and enjoy other amazing music collections.`}
+          content={`Stream ${data.artiste.name}'s latest songs and albums on Neon Music and enjoy other amazing music collections.`}
         />
         <meta property="og:image" content={data.artiste.image || ""} />
         <meta
           property="og:url"
-          content={`https://jollify-server.vercel.app/artistes/${data.artiste._id}`}
+          content={`https://neon-music-server.vercel.app/artistes/${data.artiste._id}`}
         />
         <meta name="twitter:card" content="summary" />
         <meta
           name="twitter:title"
-          content={`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Jollify`}
+          content={`${data.artiste.name} songs Mp3. New Songs and Albums - Stream on Neon Music`}
         />
         <meta
           name="twitter:description"
-          content={`Stream ${data.artiste.name}'s latest songs and albums on Jollify and enjoy other amazing music collections.`}
+          content={`Stream ${data.artiste.name}'s latest songs and albums on Neon Music and enjoy other amazing music collections.`}
         />
         <meta name="twitter:image" content={data.artiste.image || ""} />
       </Helmet>

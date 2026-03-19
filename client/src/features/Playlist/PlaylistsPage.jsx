@@ -42,22 +42,25 @@ const PlaylistsPage = () => {
   return (
     <section className="text-gray-100">
       <Helmet prioritizeSeoTags>
-        <title>{`Playlists - Jollify`}</title>
-        <link rel="canonical" href={`https://jollify.vercel.app/playlists`} />
+        <title>{`Playlists - Neon Music`}</title>
+        <link
+          rel="canonical"
+          href={`https://neon-music.vercel.app/playlists`}
+        />
         <meta
           name="description"
           content={`Unleash your musical journey from our collection of playlists`}
         />
-        <meta property="og:title" content="Playlists - Jollify" />
+        <meta property="og:title" content="Playlists - Neon Music" />
         <meta
           property="og:url"
-          content={`https://jollify-server.vercel.app/playlists`}
+          content={`https://neon-music-server.vercel.app/playlists`}
         />
         <meta
           property="og:description"
           content={`Unleash your musical journey from our collection of playlists`}
         />
-        <meta name="twitter:title" content="Playlists - Jollify" />
+        <meta name="twitter:title" content="Playlists - Neon Music" />
         <meta
           name="twitter:description"
           content="Unleash your musical journey from our collection of playlists"

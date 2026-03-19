@@ -34,30 +34,30 @@ const SongsPage = () => {
   return (
     <section className="text-gray-100">
       <Helmet prioritizeSeoTags>
-        <title>{`Explore - Jollify`}</title>
+        <title>{`Explore - Neon Music`}</title>
         <link rel="canonical" href={`http://localhost:4000`} />
         <meta
           name="description"
-          content={`Browse amazing collection of songs on Jollify`}
+          content={`Browse amazing collection of songs on Neon Music`}
         />
-        <meta property="og:title" content="Explore - Jollify" />
+        <meta property="og:title" content="Explore - Neon Music" />
         <meta
           property="og:url"
-          content={`https://jollify-server.vercel.app/songs`}
+          content={`https://neon-music-server.vercel.app/songs`}
         />
         <meta
           property="og:description"
-          content={`Browse amazing collection of songs on Jollify`}
+          content={`Browse amazing collection of songs on Neon Music`}
         />
-        <meta name="twitter:title" content="Explore - Jollify" />
+        <meta name="twitter:title" content="Explore - Neon Music" />
         <meta
           name="twitter:description"
-          content="Browse amazing collection of songs on Jollify"
+          content="Browse amazing collection of songs on Neon Music"
         />
       </Helmet>
       <h1 className="text-xl md:text-3xl font-semibold mb-2">Explore</h1>
       <p className="mb-8 text-gray-200">
-        Browse amazing collection of songs on Jollify
+        Browse amazing collection of songs on Neon Music
       </p>
       <motion.div
         initial={{ opacity: 0, y: 20 }}

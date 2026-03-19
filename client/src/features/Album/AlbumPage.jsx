@@ -35,46 +35,46 @@ const AlbumPage = () => {
   return (
     <section className=" text-gray-200">
       <Helmet prioritizeSeoTags>
-        <title>{`${album.artiste.name} - ${album.title} MP3 Stream on Jollify`}</title>
+        <title>{`${album.artiste.name} - ${album.title} MP3 Stream on Neon Music`}</title>
         <link
           rel="canonical"
-          href={`https://jollify.vercel.app/albums/${album._id}`}
+          href={`https://neon-music.vercel.app/albums/${album._id}`}
         />
         <meta
           name="description"
           content={`Stream ${album.title} by ${
             album.artiste.name
-          } on Jollify and enjoy other amazing music collections. Released ${formatDate(
+          } on Neon Music and enjoy other amazing music collections. Released ${formatDate(
             album.releaseDate,
           )}`}
         />
         <meta
           property="og:title"
-          content={`${album.artiste.name} - ${album.title} MP3 Stream on Jollify`}
+          content={`${album.artiste.name} - ${album.title} MP3 Stream on Neon Music`}
         />
         <meta
           property="og:description"
           content={`Stream ${album.title} by ${
             album.artiste.name
-          } on Jollify and enjoy other amazing music collections. Released ${formatDate(
+          } on Neon Music and enjoy other amazing music collections. Released ${formatDate(
             album.releaseDate,
           )}`}
         />
         <meta property="og:image" content={album.coverImage || ""} />
         <meta
           property="og:url"
-          content={`https://jollify-server.vercel.app/albums/${album._id}`}
+          content={`https://neon-music-server.vercel.app/albums/${album._id}`}
         />
         <meta name="twitter:card" content="summary" />
         <meta
           name="twitter:title"
-          content={`${album.artiste.name} - ${album.title} MP3 Stream on Jollify`}
+          content={`${album.artiste.name} - ${album.title} MP3 Stream on Neon Music`}
         />
         <meta
           name="twitter:description"
           content={`Stream ${album.title} by ${
             album.artiste.name
-          } on Jollify and enjoy other amazing music collections. Released ${formatDate(
+          } on Neon Music and enjoy other amazing music collections. Released ${formatDate(
             album.releaseDate,
           )}`}
         />

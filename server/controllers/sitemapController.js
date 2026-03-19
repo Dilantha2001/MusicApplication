@@ -22,7 +22,7 @@ const getSitemap = asyncHandler(async (req, res) => {
   }
 
   const smStream = new SitemapStream({
-    hostname: "https://jollify.vercel.app/",
+    hostname: "https://neon-music.vercel.app/",
   });
   const pipeline = smStream.pipe(createGzip());
 

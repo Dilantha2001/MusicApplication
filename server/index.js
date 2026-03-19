@@ -23,7 +23,7 @@ app.use(
       // Also allow localhost for development
       if (
         !origin ||
-        origin === "https://jollify.vercel.app" ||
+        origin === "https://neon-music.vercel.app" ||
         origin === "http://localhost:5173" ||
         origin.startsWith("http://localhost:")
       ) {
@@ -43,7 +43,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-  res.send("Welcome to Jollify. Enjoy our rich collection of music");
+  res.send("Welcome to Neon Music. Enjoy our rich collection of music");
 });
 
 app.use("/auth", authRoutes);

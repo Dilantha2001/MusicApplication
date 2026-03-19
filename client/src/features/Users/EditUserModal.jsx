@@ -82,7 +82,7 @@ const EditUserModal = ({ closeModal, isModalOpen, user, children }) => {
                     <label className="block text-gray-700  mb-1">Bio</label>
                     <input
                       type="text"
-                      placeholder="I love Jollify"
+                      placeholder="I love Neon Music"
                       name="bio"
                       defaultValue={user.bio}
                       onChange={(e) =>

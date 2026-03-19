@@ -21,7 +21,7 @@ const Search = () => {
         <input
           className="w-full pl-10 pr-4 py-2 bg-transparent rounded-full border border-gray-600 shadow-sm focus:outline-none focus:border-gray-500"
           type="text"
-          placeholder="Find songs on Jollify..."
+          placeholder="Find songs on Neon Music..."
           value={query}
           onChange={handleSearchChange}
         />

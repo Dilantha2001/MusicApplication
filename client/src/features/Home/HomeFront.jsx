@@ -49,7 +49,7 @@ const HomeFront = () => {
             Charts
           </p>
           <h2 className="text-2xl md:text-3xl font-black tracking-tight leading-none text-white">
-            Jollify Top 50
+            Neon Music Top 50
           </h2>
         </div>
         <Link

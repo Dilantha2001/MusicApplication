@@ -30,36 +30,36 @@ const PlaylistPage = () => {
   return (
     <section className=" text-gray-200">
       <Helmet prioritizeSeoTags>
-        <title>{`${playlist.title} - Stream on Jollify`}</title>
+        <title>{`${playlist.title} - Stream on Neon Music`}</title>
         <link
           rel="canonical"
-          href={`https://jollify.vercel.app/playlists/${playlist._id}`}
+          href={`https://neon-music.vercel.app/playlists/${playlist._id}`}
         />
         <meta
           name="description"
-          content={`Stream ${playlist.title} on Jollify and enjoy other amazing music collections.`}
+          content={`Stream ${playlist.title} on Neon Music and enjoy other amazing music collections.`}
         />
         <meta
           property="og:title"
-          content={`${playlist.title} - Stream on Jollify`}
+          content={`${playlist.title} - Stream on Neon Music`}
         />
         <meta
           property="og:description"
-          content={`Stream ${playlist.title} on Jollify and enjoy other amazing music collections.`}
+          content={`Stream ${playlist.title} on Neon Music and enjoy other amazing music collections.`}
         />
         <meta property="og:image" content={playlist.coverImage || ""} />
         <meta
           property="og:url"
-          content={`https://jollify-server.vercel.app/playlists/${playlist._id}`}
+          content={`https://neon-music-server.vercel.app/playlists/${playlist._id}`}
         />
         <meta name="twitter:card" content="summary" />
         <meta
           name="twitter:title"
-          content={`${playlist.title} - Stream on Jollify`}
+          content={`${playlist.title} - Stream on Neon Music`}
         />
         <meta
           name="twitter:description"
-          content={`Stream ${playlist.title} on Jollify and enjoy other amazing music collections.`}
+          content={`Stream ${playlist.title} on Neon Music and enjoy other amazing music collections.`}
         />
         <meta name="twitter:image" content={playlist.coverImage || ""} />
       </Helmet>
@@ -71,7 +71,7 @@ const PlaylistPage = () => {
             className={`bg-${selectedTheme} text-gray-100 hover:bg-${selectedTheme}-50 active:bg-opacity-90 py-2 px-4 rounded-md text-lg font-semibold transition duration-300`}
             onClick={() => navigate("/explore")}
           >
-            Find songs on Jollify
+            Find songs on Neon Music
           </button>
         ) : (
           <SongList songs={playlist.songs} listType={"playlist"} />
