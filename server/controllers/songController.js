@@ -51,7 +51,8 @@ const getSongDetails = asyncHandler(async (req, res) => {
 // @route GET api/songs/top
 // @access Public
 const getTopSongs = asyncHandler(async (req, res) => {
-  const limit = parseInt(req.query.limit);
+  const limit = parseInt(req.query.limit) || 10; // Default to 10 if no limit provided
+
   const songs = await Song.aggregate([
     {
       $lookup: {
@@ -61,6 +62,8 @@ const getTopSongs = asyncHandler(async (req, res) => {
         as: "artiste",
       },
     },
+    // Unwind artiste (Required - every song must have an artist)
+    { $unwind: "$artiste" },
     {
       $lookup: {
         from: "albums",
@@ -69,8 +72,8 @@ const getTopSongs = asyncHandler(async (req, res) => {
         as: "album",
       },
     },
-    { $unwind: "$artiste" },
-    { $unwind: "$album" },
+    // CRITICAL FIX: preserveNullAndEmptyArrays allows songs without albums to show up
+    { $unwind: { path: "$album", preserveNullAndEmptyArrays: true } },
     {
       $project: {
         _id: 1,
@@ -79,17 +82,24 @@ const getTopSongs = asyncHandler(async (req, res) => {
         duration: 1,
         audioURL: 1,
         artiste: { _id: "$artiste._id", name: "$artiste.name" },
-        album: { _id: "$album._id", title: "$album.title" },
+        // If there is no album, it returns "Single" instead of breaking
+        album: {
+          _id: { $ifNull: ["$album._id", null] },
+          title: { $ifNull: ["$album.title", "Single"] },
+        },
       },
     },
+    // For "Top Songs", you usually want to sort by plays or trendingScore
+    // instead of a random $sample. But for now, here is your sample:
     { $sample: { size: limit } },
   ]);
+
   if (!songs || songs.length === 0) {
     return res.status(404).json({ message: "No songs found" });
   }
+
   res.status(200).json(songs);
 });
-
 // @desc  Get any song
 // @route GET api/songs/any
 // @access Public
@@ -104,7 +114,6 @@ const getAnySong = asyncHandler(async (req, res) => {
       },
     },
     { $unwind: "$artiste" },
-    { $match: { "artiste.image": { $ne: "" } } },
     {
       $lookup: {
         from: "albums",
@@ -113,7 +122,8 @@ const getAnySong = asyncHandler(async (req, res) => {
         as: "album",
       },
     },
-    { $unwind: "$album" },
+    // preserveNullAndEmptyArrays prevents the song from being deleted if album is null
+    { $unwind: { path: "$album", preserveNullAndEmptyArrays: true } },
     {
       $project: {
         _id: 1,
@@ -125,17 +135,18 @@ const getAnySong = asyncHandler(async (req, res) => {
           name: "$artiste.name",
           image: "$artiste.image",
         },
-        album: { _id: "$album._id", title: "$album.title" },
+        // Return null if album doesn't exist instead of breaking
+        album: { $ifNull: ["$album.title", "Single"] },
       },
     },
     { $sample: { size: 1 } },
   ]);
+
   if (!randomSong || randomSong.length === 0) {
     return res.status(404).json({ message: "No featured song available" });
   }
   res.status(200).json(randomSong[0]);
 });
-
 // @desc  Upload a new song (audio + cover image) via Cloudinary
 // @route POST api/songs/upload
 // @access Private
@@ -144,9 +155,7 @@ const uploadSong = asyncHandler(async (req, res) => {
     req.body;
 
   if (!title || !artiste) {
-    return res
-      .status(400)
-      .json({ message: "Title and artiste are required" });
+    return res.status(400).json({ message: "Title and artiste are required" });
   }
   if (!req.files?.audio) {
     return res.status(400).json({ message: "Audio file is required" });
@@ -160,7 +169,7 @@ const uploadSong = asyncHandler(async (req, res) => {
         (error, result) => {
           if (error) return reject(error);
           resolve(result);
-        }
+        },
       );
       stream.end(buffer);
     });
@@ -176,7 +185,7 @@ const uploadSong = asyncHandler(async (req, res) => {
   if (req.files?.coverImage) {
     const coverResult = await uploadToCloudinary(
       req.files.coverImage[0].buffer,
-      { resource_type: "image", folder: "jollify/covers" }
+      { resource_type: "image", folder: "jollify/covers" },
     );
     coverImageUrl = coverResult.secure_url;
   }

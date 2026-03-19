@@ -68,7 +68,6 @@ const generate100Songs = () => {
 
   for (let i = 1; i <= 100; i++) {
     // Arrays වලින් random විදිහට දේවල් තෝරගන්නවා
-    const artistName = artists[i % artists.length];
     const songName = `${baseSongNames[i % baseSongNames.length]} (Vol. ${i})`;
     const cover = images[i % images.length]; // දවස් වෙනස් වෙන්න Date එකක් හදනවා
 
@@ -77,10 +76,6 @@ const generate100Songs = () => {
 
     songs.push({
       title: songName,
-      artiste: {
-        name: artistName,
-        image: cover,
-      },
       coverImage: cover,
       audioURL: audioUrl,
       releaseDate: releaseDate,
@@ -117,7 +112,19 @@ const importData = async () => {
     const artistesResult = await db
       .collection("artistes")
       .insertMany(artisteDocs);
-    const artisteIds = Object.values(artistesResult.insertedIds); // Create albums linked to artistes
+    const artisteIds = Object.values(artistesResult.insertedIds);
+
+    // Link songs to artistes
+    console.log("Linking songs to artistes...");
+    for (let i = 0; i < songIds.length; i++) {
+      const artistIndex = i % artists.length;
+      await db
+        .collection("songs")
+        .updateOne(
+          { _id: songIds[i] },
+          { $set: { artiste: artisteIds[artistIndex] } },
+        );
+    } // Create albums linked to artistes
 
     console.log("Creating albums...");
     const albumDocs = [];
