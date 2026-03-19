@@ -4,13 +4,15 @@ import { setCurrentTime, setDuration, setPlaying } from "./playerSlice";
 
 const AudioPlayer = ({ audioRef, restartSong, handleNext, setIsLoading }) => {
   const { isPlaying, currentSong, currentIndex, queue, repeat } = useSelector(
-    (state) => state.player
+    (state) => state.player,
   );
   const dispatch = useDispatch();
 
   const src = audioRef?.current?.src ?? null;
 
   useEffect(() => {
+    if (!audioRef?.current) return;
+
     if (isPlaying && audioRef.current.src) {
       audioRef.current.play();
     } else {
@@ -62,6 +64,8 @@ const AudioPlayer = ({ audioRef, restartSong, handleNext, setIsLoading }) => {
   };
 
   const handleCanPlay = () => {
+    if (!audioRef?.current) return;
+
     if (isPlaying && audioRef.current.src) {
       setIsLoading(false);
       audioRef.current.play();

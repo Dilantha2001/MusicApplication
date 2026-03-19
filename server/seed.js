@@ -64,16 +64,14 @@ const audioUrl =
   "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
 const generate100Songs = () => {
-  const songs = [];
+  const songs = []; // Loop එකක් හරහා සිංදු 100ක් ඔටෝ හදනවා
 
-  // Loop එකක් හරහා සිංදු 100ක් ඔටෝ හදනවා
   for (let i = 1; i <= 100; i++) {
     // Arrays වලින් random විදිහට දේවල් තෝරගන්නවා
     const artistName = artists[i % artists.length];
     const songName = `${baseSongNames[i % baseSongNames.length]} (Vol. ${i})`;
-    const cover = images[i % images.length];
+    const cover = images[i % images.length]; // දවස් වෙනස් වෙන්න Date එකක් හදනවා
 
-    // දවස් වෙනස් වෙන්න Date එකක් හදනවා
     const releaseDate = new Date();
     releaseDate.setDate(releaseDate.getDate() - i * 3); // දවස් 3න් 3ට පස්සට යනවා
 
@@ -96,22 +94,19 @@ const generate100Songs = () => {
 const importData = async () => {
   try {
     console.log("Connecting to Database...");
-    const db = mongoose.connection;
+    const db = mongoose.connection; // කලින් දාපු පරණ සිංදු තියෙනවා නම් ඒ ටික ඔක්කොම මකනවා (එතකොට Duplicate වෙන්නේ නෑ)
 
-    // කලින් දාපු පරණ සිංදු තියෙනවා නම් ඒ ටික ඔක්කොම මකනවා (එතකොට Duplicate වෙන්නේ නෑ)
     console.log("Clearing old songs, albums, artistes, and playlists...");
     await db.collection("songs").deleteMany({});
     await db.collection("albums").deleteMany({});
     await db.collection("artistes").deleteMany({});
-    await db.collection("playlists").deleteMany({});
+    await db.collection("playlists").deleteMany({}); // අලුතින් හදපු සිංදු 100 ඇතුළත් කරනවා
 
-    // අලුතින් හදපු සිංදු 100 ඇතුළත් කරනවා
     console.log("Inserting 100 trending songs...");
     const hundredSongs = generate100Songs();
     const songsResult = await db.collection("songs").insertMany(hundredSongs);
-    const songIds = Object.values(songsResult.insertedIds);
+    const songIds = Object.values(songsResult.insertedIds); // Create artistes from the artists array
 
-    // Create artistes from the artists array
     console.log("Creating artistes...");
     const artisteDocs = artists.map((name, index) => ({
       name: name,
@@ -122,9 +117,8 @@ const importData = async () => {
     const artistesResult = await db
       .collection("artistes")
       .insertMany(artisteDocs);
-    const artisteIds = Object.values(artistesResult.insertedIds);
+    const artisteIds = Object.values(artistesResult.insertedIds); // Create albums linked to artistes
 
-    // Create albums linked to artistes
     console.log("Creating albums...");
     const albumDocs = [];
     for (let i = 0; i < 15; i++) {
@@ -138,9 +132,8 @@ const importData = async () => {
         likes: [],
       });
     }
-    await db.collection("albums").insertMany(albumDocs);
+    await db.collection("albums").insertMany(albumDocs); // Create playlists
 
-    // Create playlists
     console.log("Creating playlists...");
     const playlistDocs = [
       {
@@ -187,10 +180,10 @@ const importData = async () => {
     await db.collection("playlists").insertMany(playlistDocs);
 
     console.log("✅ Data Imported Successfully! 🚀");
-    console.log("   - 100 Songs");
-    console.log("   - 15 Artistes");
-    console.log("   - 15 Albums");
-    console.log("   - 5 Playlists");
+    console.log("   - 100 Songs");
+    console.log("   - 15 Artistes");
+    console.log("   - 15 Albums");
+    console.log("   - 5 Playlists");
     process.exit();
   } catch (error) {
     console.error(`❌ Error with data import: ${error.message}`);
