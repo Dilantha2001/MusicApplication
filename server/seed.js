@@ -78,8 +78,25 @@ const images = [
 ];
 
 // Play කරන්න පුළුවන් MP3 ලින්ක් එකක්
-const audioUrl =
-  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+// Different sample MP3s from SoundHelix for variety
+const audioUrls = [
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
+  "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3",
+];
 
 const generate100Songs = () => {
   const songs = []; // Loop එකක් හරහා සිංදු 100ක් ඔටෝ හදනවා
@@ -95,7 +112,7 @@ const generate100Songs = () => {
     songs.push({
       title: songName,
       coverImage: cover,
-      audioURL: audioUrl,
+      audioURL: audioUrls[i % audioUrls.length],
       releaseDate: releaseDate,
       lyrics: `[Verse 1]\nThis is auto-generated trending song number ${i}.\nMusic is life, enjoy the vibe!\n\n[Chorus]\nOh yeah, we are streaming on Neon Music!\nLet the beat drop!`,
       comments: [],

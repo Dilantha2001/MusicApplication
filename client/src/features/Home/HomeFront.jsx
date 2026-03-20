@@ -25,7 +25,7 @@ const HomeFront = () => {
   const handleScroll = () => {
     const scrollPosition = window.scrollY;
     const index = songRefs.current.findIndex(
-      (ref) => ref.offsetTop + 300 >= scrollPosition,
+      (ref) => ref && ref.offsetTop + 300 >= scrollPosition,
     );
     setHighlightedIndex(index);
   };

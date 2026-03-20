@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setCurrentTime, setDuration, setPlaying } from "./playerSlice";
 
 const AudioPlayer = ({ audioRef, restartSong, handleNext, setIsLoading }) => {
-  const { isPlaying, currentSong, currentIndex, queue, repeat } = useSelector(
+  const { isPlaying, currentIndex, queue, repeat } = useSelector(
     (state) => state.player,
   );
   const dispatch = useDispatch();
@@ -81,7 +81,6 @@ const AudioPlayer = ({ audioRef, restartSong, handleNext, setIsLoading }) => {
   return (
     <audio
       ref={audioRef}
-      src={currentSong}
       onCanPlay={handleCanPlay}
       onTimeUpdate={handleTimeUpdate}
       onLoadedMetadata={handleLoadedMetaData}
