@@ -33,35 +33,54 @@ const Recommend = ({ type }) => {
   const error = albumError || playlistError;
 
   return (
-    <section className="text-gray-200 mt-8">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-lg md:text-2xl font-bold">
-          Recommended {type[0].toUpperCase() + type.slice(1)}
-        </h2>
+    <section className="mt-12 group/section">
+      {/* Header section with modern label style */}
+      <div className="flex justify-between items-end mb-8 px-2">
+        <div>
+          <p className={`text-[10px] font-black uppercase tracking-[0.4em] text-${selectedTheme}/50 mb-2`}>
+            Discovery AI
+          </p>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-black font-outfit tracking-tighter text-white">
+            Top <span className={`text-${selectedTheme}`}>{type[0].toUpperCase() + type.slice(1)}</span>
+          </h2>
+        </div>
+        
         <Link
           to={`/${type}`}
-          className={`text-base text-${selectedTheme} hover:text-${selectedTheme}-50 active:text-opacity-75 font-bold `}
-          title={`${type}`}
+          className={`
+            group/btn flex items-center gap-2 px-6 py-2.5 rounded-2xl
+            bg-white/5 border border-white/10 hover:border-white/20
+            text-xs font-black font-outfit uppercase tracking-widest text-white/40 hover:text-white
+            transition-all duration-300
+          `}
         >
-          See more
+          View Grid
+          <div className={`w-1.5 h-1.5 rounded-full bg-${selectedTheme} group-hover/btn:scale-150 transition-transform`} />
         </Link>
       </div>
-      <article className="flex overflow-x-auto gap-8">
-        {isLoading && (
-          <div className="flex-grow flex justify-center items-center h-36 md:h-40">
-            <AiOutlineLoading className="text-3xl animate-spin" />
-          </div>
-        )}
-        {isError && (
-          <div className="flex-grow h-36 md:h-40">
-            <ErrorMsg error={error} />
-          </div>
-        )}
-        {data &&
-          data?.map((item) => (
-            <Card key={item._id} resource={item} type={type} />
-          ))}
-      </article>
+
+      {/* Horizontal Scroll logic */}
+      <div className="relative">
+        <article className="flex overflow-x-auto gap-8 pb-8 px-2 scroll-smooth no-scrollbar custom-scrollbar pr-10">
+          {isLoading && (
+            <div className="flex-grow flex justify-center items-center h-48 rounded-[2rem] glass">
+              <AiOutlineLoading className={`text-4xl animate-spin text-${selectedTheme}`} />
+            </div>
+          )}
+          {isError && (
+            <div className="flex-grow min-h-[12rem]">
+              <ErrorMsg error={error} />
+            </div>
+          )}
+          {data &&
+            data?.map((item) => (
+              <Card key={item._id} resource={item} type={type} />
+            ))}
+        </article>
+        
+        {/* Right edge fade for horizontal scroll hinting */}
+        <div className="absolute top-0 right-0 bottom-8 w-24 bg-gradient-to-l from-primary/80 to-transparent pointer-events-none" />
+      </div>
     </section>
   );
 };

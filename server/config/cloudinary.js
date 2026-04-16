@@ -1,4 +1,4 @@
-require("dotenv").config();
+// require("dotenv").config(); // Removed to avoid potential path issues, index.js handles this
 const cloudinary = require("cloudinary").v2;
 console.log("Cloudinary Details Check =>", {
   name: process.env.CLOUD_NAME,

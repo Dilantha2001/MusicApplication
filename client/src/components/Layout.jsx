@@ -12,7 +12,6 @@ import CreatePlaylistModal from "../features/Studio/MyPlaylists/CreatePlaylistMo
 
 const Layout = () => {
   const { currentSong } = useSelector((state) => state.player);
-
   const location = useLocation();
 
   useEffect(() => {
@@ -20,38 +19,52 @@ const Layout = () => {
   }, [location.pathname]);
 
   return (
-    <div className="bg-primary">
-      <div className="grid grid-cols-5 grid-rows-[1fr,auto,88]">
-        <aside
-          className={`col-span-5 md:col-span-1 md:sticky md:top-0 md:h-screen overflow-y-auto bg-primary text-white ${
-            currentSong && "md:pb-[88px]"
-          }`}
-        >
+    <div className="relative min-h-screen bg-primary font-inter">
+      {/* Background Cinematic Mesh - Fixed */}
+      <div className="fixed inset-0 z-0 bg-mesh-gradient opacity-60 pointer-events-none" />
+
+      <div className="relative z-10 flex flex-col md:flex-row h-screen overflow-hidden">
+        {/* Sidebar Navigation */}
+        <aside className="w-full md:w-64 lg:w-72 flex-shrink-0 z-30">
           <NavBar />
         </aside>
-        <main
-          className={`col-span-5 md:col-span-4 grid grid-rows-[1fr,auto] ${
-            currentSong && "pb-[88px]"
-          }`}
-        >
-          <div className="bg-secondary-200 row-span-1 min-h-screen overflow-y-auto p-4 md:p-8">
-            <Outlet />
-          </div>
-          <Footer />
+
+        {/* Main Content Area */}
+        <div className="flex-1 flex flex-col min-w-0 overflow-hidden relative">
+          <main className="flex-1 overflow-y-auto overflow-x-hidden scroll-smooth custom-scrollbar">
+            <div className={`p-4 md:p-8 lg:p-10 transition-all duration-500 ${currentSong ? "pb-32" : "pb-10"}`}>
+              <Outlet />
+            </div>
+            <Footer />
+          </main>
+
+          {/* Toast Container - Glass Styled */}
           <ToastContainer
-            position="top-center"
-            autoClose={2000}
-            hideProgressBar={true}
+            position="bottom-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            toastClassName="glass backdrop-blur-2xl border border-white/10 rounded-2xl font-outfit"
           />
-        </main>
+        </div>
       </div>
-      <div
-        className={`fixed z-40 bottom-0 left-0 right-0 transition-all ease-in-out ${
-          !currentSong && "hidden"
-        }`}
-      >
-        <Player />
-      </div>
+
+      {/* Floating Music Player */}
+      {currentSong && (
+        <div className="fixed z-50 bottom-4 left-4 right-4 md:left-72 md:right-8 transition-all duration-700 animate-in fade-in slide-in-from-bottom-10">
+          <div className="glass backdrop-blur-3xl border border-white/10 rounded-3xl p-1 shadow-2xl shadow-black/50 overflow-hidden">
+            <Player />
+          </div>
+        </div>
+      )}
+
+      {/* Modals */}
       <AddToPlaylistModal />
       <LoginModal />
       <CreatePlaylistModal />
