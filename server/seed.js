@@ -2,66 +2,68 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const path = require("path");
 
-// .env ෆයිල් එකේ තියෙන විස්තර (Database URL එක) ගන්න
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
-// Mongoose හරහා MongoDB එකට Connect වීම
 mongoose.connect(process.env.DB_STRING || process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
-// අපි Database එකට දාන්න යන සිංදු කියන අයගේ (Artists) ලිස්ට් එක
 const artists = [
-  "Yohani",
-  "Piyath Rajapakse",
-  "Bathiya & Santhush",
-  "Chamara Weerasinghe",
-  "Dinesh Gamage",
-  "Supun Perera",
-  "Kanchana Anuradhi",
-  "Costa",
-  "Ravi Royster",
-  "Yuki Navaratne",
-  "Wayo",
-  "Shan Diyagamage",
-  "Hana Shafa",
-  "Pasan Liyanage",
-  "Nadeemal Perera",
-  "Romaine Willis",
-  "Dhyan Hewage",
-  "Sashika Nisansala",
-  "Shihan Mihiranga",
-  "Umaria Sinhawansa",
+  "The Weeknd",
+  "Taylor Swift",
+  "Drake",
+  "SZA",
+  "Bad Bunny",
+  "Kendrick Lamar",
+  "Billie Eilish",
+  "Travis Scott",
+  "Dua Lipa",
+  "Post Malone",
+  "Ariana Grande",
+  "Olivia Rodrigo",
+  "Justin Bieber",
+  "Sabrina Carpenter",
+  "Doja Cat",
+  "Metro Boomin",
+  "Burna Boy",
+  "Rema",
+  "Tyla",
+  "Morgan Wallen",
 ];
 
-// Trending සිංදු නම් (Sinhala Hits)
 const baseSongNames = [
-  "Manike Mage Hithe",
-  "Numbata Dunnu Aale",
-  "Sanchare",
-  "Galana Ganga",
-  "Sandawathiye",
-  "Pem Kawak",
-  "Kaluwara Dawasaka",
-  "Dawasak Ewi",
-  "Sitha Dawena",
-  "Asidisi",
-  "Mathrawe",
-  "Hithawanthi",
-  "Ummah",
-  "Nil Pata Dase",
-  "Meenachchi",
-  "Game Wedha",
-  "Kiyaapan",
-  "Mala Panala",
-  "Mage Wela",
-  "Randukariye",
-  "Bandimu Suda",
-  "Udurawee",
+  "Blinding Lights",
+  "Cruel Summer",
+  "Not Like Us",
+  "Snooze",
+  "Espresso",
+  "FE!N",
+  "Birds of a Feather",
+  "Houdini",
+  "Million Dollar Baby",
+  "Paint The Town Red",
+  "Water",
+  "Vampire",
+  "Lovin On Me",
+  "Calm Down",
+  "Die With A Smile",
+  "Starboy",
+  "Seven",
+  "Flowers",
+  "As It Was",
+  "Good 4 U",
+  "Rockstar",
+  "One Dance",
+  "Levitating",
+  "Heat Waves",
+  "Stay",
+  "Believer",
+  "Lovely",
+  "Perfect",
+  "Something in the Orange",
 ];
 
-// ලස්සන Cover Images ටිකක් (Unsplash වලින්)
 const images = [
   "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500",
   "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500",
@@ -71,8 +73,6 @@ const images = [
   "https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=500",
 ];
 
-// Play කරන්න පුළුවන් MP3 ලින්ක් එකක්
-// Different sample MP3s from SoundHelix for variety
 const audioUrls = [
   "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
   "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
@@ -93,23 +93,21 @@ const audioUrls = [
 ];
 
 const generate100Songs = () => {
-  const songs = []; // Loop එකක් හරහා සිංදු 100ක් ඔටෝ හදනවා
+  const songs = [];
 
   for (let i = 1; i <= 100; i++) {
-    // Arrays වලින් random විදිහට දේවල් තෝරගන්නවා
     const songName = `${baseSongNames[i % baseSongNames.length]} (Vol. ${i})`;
     const cover = images[i % images.length];
 
-    // දවස් වෙනස් වෙන්න Date එකක් හදනවා
     const releaseDate = new Date();
-    releaseDate.setDate(releaseDate.getDate() - i * 3); // දවස් 3න් 3ට පස්සට යනවා
+    releaseDate.setDate(releaseDate.getDate() - i * 3);
 
     songs.push({
       title: songName,
       coverImage: cover,
       audioURL: audioUrls[i % audioUrls.length],
       releaseDate: releaseDate,
-      lyrics: `[Verse 1]\nThis is auto-generated trending Sinhala song number ${i}.\nMusic is life, enjoy the vibe!\n\n[Chorus]\nOh yeah, we are streaming on Neon Music!\nLet the beat drop!`,
+      lyrics: `[Verse 1]\nThis is auto-generated trending song number ${i}.\nMusic is life, enjoy the vibe!\n\n[Chorus]\nOh yeah, we are streaming on Neon Music!\nLet the beat drop!`,
       comments: [],
     });
   }
@@ -121,25 +119,22 @@ const importData = async () => {
     console.log("Connecting to Database...");
     const db = mongoose.connection;
 
-    // කලින් දාපු පරණ සිංදු තියෙනවා නම් ඒ ටික ඔක්කොම මකනවා (එතකොට Duplicate වෙන්නේ නෑ)
     console.log("Clearing old songs, albums, artistes, and playlists...");
     await db.collection("songs").deleteMany({});
     await db.collection("albums").deleteMany({});
     await db.collection("artistes").deleteMany({});
     await db.collection("playlists").deleteMany({});
 
-    // අලුතින් හදපු සිංදු 100 ඇතුළත් කරනවා
     console.log("Inserting 100 trending songs...");
     const hundredSongs = generate100Songs();
     const songsResult = await db.collection("songs").insertMany(hundredSongs);
-    const songIds = Object.values(songsResult.insertedIds);
+    const songIds = Object.values(songsResult.insertedIds); // Create artistes from the artists array
 
-    // Create artistes from the artists array
     console.log("Creating artistes...");
     const artisteDocs = artists.map((name, index) => ({
       name: name,
       image: images[index % images.length],
-      bio: `This is the bio for ${name}, one of the most popular Sinhala artists right now.`,
+      bio: `This is the bio for ${name}, one of the most popular artists in the world.`,
       likes: [],
     }));
     const artistesResult = await db
@@ -157,9 +152,8 @@ const importData = async () => {
           { _id: songIds[i] },
           { $set: { artiste: artisteIds[artistIndex] } },
         );
-    }
+    } // Create albums linked to artistes
 
-    // Create albums linked to artistes
     console.log("Creating albums...");
     const albumDocs = [];
     for (let i = 0; i < 15; i++) {
@@ -168,44 +162,42 @@ const importData = async () => {
         artiste: artisteIds[i % artisteIds.length],
         coverImage: images[i % images.length],
         releaseDate: new Date(),
-        genre: ["Pop", "Baila", "Hip Hop", "Acoustic", "Classical"][i % 5], // Updated genres
+        genre: ["Pop", "R&B", "Hip Hop", "Rock", "Electronic"][i % 5],
         songs: songIds.slice(i * 6, i * 6 + 6),
         likes: [],
       });
     }
-    await db.collection("albums").insertMany(albumDocs);
+    await db.collection("albums").insertMany(albumDocs); // Create playlists
 
-    // Create playlists
     console.log("Creating playlists...");
     const playlistDocs = [
       {
-        title: "Sinhala Top Hits 2024",
-        description: "The hottest Sinhala tracks of the year",
+        title: "Top Hits 2024",
+        description: "The hottest tracks of the year",
         coverImage: images[0],
         createdBy: null,
         songs: songIds.slice(0, 10),
         likes: [],
       },
       {
-        title: "Sinhala Chill Vibes",
-        description:
-          "Relax and unwind with these smooth tracks (මනෝ පාරක් ගහන්න)",
+        title: "Chill Vibes",
+        description: "Relax and unwind with these smooth tracks",
         coverImage: images[1],
         createdBy: null,
         songs: songIds.slice(10, 20),
         likes: [],
       },
       {
-        title: "Baila & Party Anthems",
-        description: "Get the party started right! (සුපිරි නැටිල්ලක්)",
+        title: "Workout Motivation",
+        description: "Pump up your workout session",
         coverImage: images[2],
         createdBy: null,
         songs: songIds.slice(20, 30),
         likes: [],
       },
       {
-        title: "Sinhala Rap & Hip-Hop",
-        description: "The best local rap scene",
+        title: "Party Anthems",
+        description: "Get the party started!",
         coverImage: images[3],
         createdBy: null,
         songs: songIds.slice(30, 40),
@@ -223,15 +215,14 @@ const importData = async () => {
     await db.collection("playlists").insertMany(playlistDocs);
 
     console.log("✅ Data Imported Successfully! 🚀");
-    console.log("   - 100 Songs");
-    console.log("   - 20 Artistes");
-    console.log("   - 15 Albums");
-    console.log("   - 5 Playlists");
+    console.log("   - 100 Songs");
+    console.log("   - 15 Artistes");
+    console.log("   - 15 Albums");
+    console.log("   - 5 Playlists");
     process.exit();
   } catch (error) {
     console.error(`❌ Error with data import: ${error.message}`);
     process.exit(1);
   }
 };
-
 importData();
