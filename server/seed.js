@@ -11,60 +11,54 @@ mongoose.connect(process.env.DB_STRING || process.env.DB_URL, {
   useUnifiedTopology: true,
 });
 
-// අපි Database එට දාන්න යන සිංදු ලිස්ට් එක
+// අපි Database එකට දාන්න යන සිංදු කියන අයගේ (Artists) ලිස්ට් එක
 const artists = [
-  "The Weeknd",
-  "Taylor Swift",
-  "Drake",
-  "SZA",
-  "Bad Bunny",
-  "Kendrick Lamar",
-  "Billie Eilish",
-  "Travis Scott",
-  "Dua Lipa",
-  "Post Malone",
-  "Ariana Grande",
-  "Olivia Rodrigo",
-  "Justin Bieber",
-  "Sabrina Carpenter",
-  "Doja Cat",
-  "Metro Boomin",
-  "Burna Boy",
-  "Rema",
-  "Tyla",
-  "Morgan Wallen",
+  "Yohani",
+  "Piyath Rajapakse",
+  "Bathiya & Santhush",
+  "Chamara Weerasinghe",
+  "Dinesh Gamage",
+  "Supun Perera",
+  "Kanchana Anuradhi",
+  "Costa",
+  "Ravi Royster",
+  "Yuki Navaratne",
+  "Wayo",
+  "Shan Diyagamage",
+  "Hana Shafa",
+  "Pasan Liyanage",
+  "Nadeemal Perera",
+  "Romaine Willis",
+  "Dhyan Hewage",
+  "Sashika Nisansala",
+  "Shihan Mihiranga",
+  "Umaria Sinhawansa",
 ];
-// Trending සිංදු නම් 15ක්
+
+// Trending සිංදු නම් (Sinhala Hits)
 const baseSongNames = [
-  "Blinding Lights",
-  "Cruel Summer",
-  "Not Like Us",
-  "Snooze",
-  "Espresso",
-  "FE!N",
-  "Birds of a Feather",
-  "Houdini",
-  "Million Dollar Baby",
-  "Paint The Town Red",
-  "Water",
-  "Vampire",
-  "Lovin On Me",
-  "Calm Down",
-  "Die With A Smile",
-  "Starboy",
-  "Seven",
-  "Flowers",
-  "As It Was",
-  "Good 4 U",
-  "Rockstar",
-  "One Dance",
-  "Levitating",
-  "Heat Waves",
-  "Stay",
-  "Believer",
-  "Lovely",
-  "Perfect",
-  "Something in the Orange",
+  "Manike Mage Hithe",
+  "Numbata Dunnu Aale",
+  "Sanchare",
+  "Galana Ganga",
+  "Sandawathiye",
+  "Pem Kawak",
+  "Kaluwara Dawasaka",
+  "Dawasak Ewi",
+  "Sitha Dawena",
+  "Asidisi",
+  "Mathrawe",
+  "Hithawanthi",
+  "Ummah",
+  "Nil Pata Dase",
+  "Meenachchi",
+  "Game Wedha",
+  "Kiyaapan",
+  "Mala Panala",
+  "Mage Wela",
+  "Randukariye",
+  "Bandimu Suda",
+  "Udurawee",
 ];
 
 // ලස්සන Cover Images ටිකක් (Unsplash වලින්)
@@ -104,8 +98,9 @@ const generate100Songs = () => {
   for (let i = 1; i <= 100; i++) {
     // Arrays වලින් random විදිහට දේවල් තෝරගන්නවා
     const songName = `${baseSongNames[i % baseSongNames.length]} (Vol. ${i})`;
-    const cover = images[i % images.length]; // දවස් වෙනස් වෙන්න Date එකක් හදනවා
+    const cover = images[i % images.length];
 
+    // දවස් වෙනස් වෙන්න Date එකක් හදනවා
     const releaseDate = new Date();
     releaseDate.setDate(releaseDate.getDate() - i * 3); // දවස් 3න් 3ට පස්සට යනවා
 
@@ -114,7 +109,7 @@ const generate100Songs = () => {
       coverImage: cover,
       audioURL: audioUrls[i % audioUrls.length],
       releaseDate: releaseDate,
-      lyrics: `[Verse 1]\nThis is auto-generated trending song number ${i}.\nMusic is life, enjoy the vibe!\n\n[Chorus]\nOh yeah, we are streaming on Neon Music!\nLet the beat drop!`,
+      lyrics: `[Verse 1]\nThis is auto-generated trending Sinhala song number ${i}.\nMusic is life, enjoy the vibe!\n\n[Chorus]\nOh yeah, we are streaming on Neon Music!\nLet the beat drop!`,
       comments: [],
     });
   }
@@ -124,24 +119,27 @@ const generate100Songs = () => {
 const importData = async () => {
   try {
     console.log("Connecting to Database...");
-    const db = mongoose.connection; // කලින් දාපු පරණ සිංදු තියෙනවා නම් ඒ ටික ඔක්කොම මකනවා (එතකොට Duplicate වෙන්නේ නෑ)
+    const db = mongoose.connection;
 
+    // කලින් දාපු පරණ සිංදු තියෙනවා නම් ඒ ටික ඔක්කොම මකනවා (එතකොට Duplicate වෙන්නේ නෑ)
     console.log("Clearing old songs, albums, artistes, and playlists...");
     await db.collection("songs").deleteMany({});
     await db.collection("albums").deleteMany({});
     await db.collection("artistes").deleteMany({});
-    await db.collection("playlists").deleteMany({}); // අලුතින් හදපු සිංදු 100 ඇතුළත් කරනවා
+    await db.collection("playlists").deleteMany({});
 
+    // අලුතින් හදපු සිංදු 100 ඇතුළත් කරනවා
     console.log("Inserting 100 trending songs...");
     const hundredSongs = generate100Songs();
     const songsResult = await db.collection("songs").insertMany(hundredSongs);
-    const songIds = Object.values(songsResult.insertedIds); // Create artistes from the artists array
+    const songIds = Object.values(songsResult.insertedIds);
 
+    // Create artistes from the artists array
     console.log("Creating artistes...");
     const artisteDocs = artists.map((name, index) => ({
       name: name,
       image: images[index % images.length],
-      bio: `This is the bio for ${name}, one of the most popular artists in the world.`,
+      bio: `This is the bio for ${name}, one of the most popular Sinhala artists right now.`,
       likes: [],
     }));
     const artistesResult = await db
@@ -159,8 +157,9 @@ const importData = async () => {
           { _id: songIds[i] },
           { $set: { artiste: artisteIds[artistIndex] } },
         );
-    } // Create albums linked to artistes
+    }
 
+    // Create albums linked to artistes
     console.log("Creating albums...");
     const albumDocs = [];
     for (let i = 0; i < 15; i++) {
@@ -169,42 +168,44 @@ const importData = async () => {
         artiste: artisteIds[i % artisteIds.length],
         coverImage: images[i % images.length],
         releaseDate: new Date(),
-        genre: ["Pop", "R&B", "Hip Hop", "Rock", "Electronic"][i % 5],
+        genre: ["Pop", "Baila", "Hip Hop", "Acoustic", "Classical"][i % 5], // Updated genres
         songs: songIds.slice(i * 6, i * 6 + 6),
         likes: [],
       });
     }
-    await db.collection("albums").insertMany(albumDocs); // Create playlists
+    await db.collection("albums").insertMany(albumDocs);
 
+    // Create playlists
     console.log("Creating playlists...");
     const playlistDocs = [
       {
-        title: "Top Hits 2024",
-        description: "The hottest tracks of the year",
+        title: "Sinhala Top Hits 2024",
+        description: "The hottest Sinhala tracks of the year",
         coverImage: images[0],
         createdBy: null,
         songs: songIds.slice(0, 10),
         likes: [],
       },
       {
-        title: "Chill Vibes",
-        description: "Relax and unwind with these smooth tracks",
+        title: "Sinhala Chill Vibes",
+        description:
+          "Relax and unwind with these smooth tracks (මනෝ පාරක් ගහන්න)",
         coverImage: images[1],
         createdBy: null,
         songs: songIds.slice(10, 20),
         likes: [],
       },
       {
-        title: "Workout Motivation",
-        description: "Pump up your workout session",
+        title: "Baila & Party Anthems",
+        description: "Get the party started right! (සුපිරි නැටිල්ලක්)",
         coverImage: images[2],
         createdBy: null,
         songs: songIds.slice(20, 30),
         likes: [],
       },
       {
-        title: "Party Anthems",
-        description: "Get the party started!",
+        title: "Sinhala Rap & Hip-Hop",
+        description: "The best local rap scene",
         coverImage: images[3],
         createdBy: null,
         songs: songIds.slice(30, 40),
@@ -222,14 +223,15 @@ const importData = async () => {
     await db.collection("playlists").insertMany(playlistDocs);
 
     console.log("✅ Data Imported Successfully! 🚀");
-    console.log("   - 100 Songs");
-    console.log("   - 15 Artistes");
-    console.log("   - 15 Albums");
-    console.log("   - 5 Playlists");
+    console.log("   - 100 Songs");
+    console.log("   - 20 Artistes");
+    console.log("   - 15 Albums");
+    console.log("   - 5 Playlists");
     process.exit();
   } catch (error) {
     console.error(`❌ Error with data import: ${error.message}`);
     process.exit(1);
   }
 };
+
 importData();

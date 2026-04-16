@@ -79,9 +79,7 @@ const loginUser = asyncHandler(async (req, res) => {
   // compare password
   const comparePassword = await user.comparePassword(password);
   if (!comparePassword) {
-    return res
-      .status(400)
-      .json({ message: "Incorrect username or password" });
+    return res.status(400).json({ message: "Incorrect username or password" });
   }
 
   const { accessToken } = generateAccessToken({
@@ -106,7 +104,7 @@ const loginUser = asyncHandler(async (req, res) => {
     maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
   });
 
-  res.status(200).json({ username: user.username });
+  res.status(200).json({ username: user.username, accessToken });
 });
 
 // @desc  Refresh token
@@ -158,4 +156,3 @@ module.exports = {
   logOutUser,
   refresh,
 };
-
