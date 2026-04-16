@@ -5,11 +5,12 @@ import { useCreatePlaylistMutation } from "../../Playlist/playlistApiSlice";
 import { MdQueueMusic } from "react-icons/md";
 import { toggleCreatePlaylistModal } from "../../../app/modalSlice";
 import { toast } from "react-toastify";
+import { motion, AnimatePresence } from "framer-motion";
 
 const CreatePlaylistModal = ({ children }) => {
   const selectedTheme = useSelector((state) => state.theme);
   const { isCreatePlaylistModal } = useSelector((state) => state.modal);
-  const [createPlaylist, { isLoading, error }] = useCreatePlaylistMutation();
+  const [createPlaylist, { isLoading }] = useCreatePlaylistMutation();
   const [formData, setFormData] = useState({ title: "", description: "" });
   const [validationErrors, setValidationErrors] = useState(null);
   const dispatch = useDispatch();
@@ -20,140 +21,114 @@ const CreatePlaylistModal = ({ children }) => {
 
   const handleCreatePlaylist = async (e) => {
     e.preventDefault();
-
     try {
       if (!formData.title) {
         setValidationErrors("Please give your playlist a title");
         return;
       }
       const sanitizedFormData = {};
-
       for (const [key, value] of Object.entries(formData)) {
         sanitizedFormData[key] = DOMPurify.sanitize(value);
       }
 
       await toast.promise(createPlaylist(sanitizedFormData).unwrap(), {
-        pending: "Loading...",
-        success: "Playlist creation successful",
-        error: "An error occurred",
+        pending: "Creating Archive...",
+        success: "Playlist initialized",
+        error: "Sync failure during creation",
       });
-      if (error) {
-        console.error(error);
-      } else {
-        closeModal();
-        setValidationErrors(null);
-      }
+      closeModal();
+      setValidationErrors(null);
     } catch (err) {
       console.error(err);
     }
   };
+
   return (
-    <div>
+    <>
       {children}
-      {isCreatePlaylistModal && (
-        <div className="fixed z-10 inset-0 overflow-y-auto backdrop-blur-sm">
-          <div className="flex items-center justify-center min-h-screen">
-            <div className="relative bg-gray-200 w-96 rounded-lg shadow-lg">
-              <div className="absolute top-0 right-0 pt-2 pr-4">
-                <button
-                  onClick={closeModal}
-                  className="text-gray-800 hover:text-gray-200 hover:bg-red-500"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div className="p-8">
-                <div className="flex items-center gap-4 mb-4">
-                  <span
-                    className={`p-2 rounded-full bg-${selectedTheme} bg-opacity-20`}
-                  >
-                    <MdQueueMusic
-                      className={`text-4xl text-${selectedTheme}`}
-                    />
-                  </span>
-                  <h2 className={`text-2xl text-gray-800 font-semibold`}>
-                    Create Playlist
-                  </h2>
+      <AnimatePresence>
+        {isCreatePlaylistModal && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeModal}
+              className="absolute inset-0 bg-black/60 backdrop-blur-xl"
+            />
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-md glass-card rounded-[3rem] overflow-hidden border border-white/10 shadow-3xl"
+            >
+              <div className="p-8 md:p-10">
+                <div className="flex items-center gap-6 mb-10">
+                  <div className={`p-4 rounded-3xl bg-${selectedTheme}/20 text-${selectedTheme}`}>
+                    <MdQueueMusic size={32} />
+                  </div>
+                  <div>
+                    <h2 className="text-2xl font-black font-outfit text-white tracking-tight">Create Archive</h2>
+                    <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.3em]">Phase 01: Metadata</p>
+                  </div>
                 </div>
-                <form onSubmit={handleCreatePlaylist}>
-                  <div className="mb-4">
-                    <label className="block text-gray-700  mb-1">Title</label>
+
+                <form onSubmit={handleCreatePlaylist} className="flex flex-col gap-6">
+                  <div className="group">
+                    <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 mb-2 ml-1">Archive Title</label>
                     <input
                       type="text"
-                      name="title"
-                      placeholder="Enter playlist title"
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          title: e.target.value.trim(),
-                        })
-                      }
-                      className="w-full border border-gray-400 bg-gray-200 rounded-md focus:outline-none p-2  text-gray-800"
+                      placeholder="e.g., Midnight Frequencies"
+                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                      className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-white font-outfit focus:outline-none focus:ring-2 focus:ring-neon-cyan/30 focus:bg-white/10 transition-all placeholder:text-white/10"
                       required
                     />
                   </div>
-                  <div className="mb-4">
-                    <label className="block text-gray-700  mb-1">
-                      Description
-                    </label>
+
+                  <div className="group">
+                    <label className="block text-[10px] font-black uppercase tracking-widest text-white/30 mb-2 ml-1">Description</label>
                     <textarea
-                      name="description"
                       rows="3"
-                      placeholder="Add playlist description"
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          description: e.target.value,
-                        })
-                      }
-                      className="w-full border border-gray-400 bg-gray-200 resize-none focus:outline-none rounded-md p-2  text-gray-800"
+                      placeholder="Brief context for this soundscape..."
+                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                      className="w-full bg-white/5 border border-white/5 rounded-2xl px-6 py-4 text-white font-outfit focus:outline-none focus:ring-2 focus:ring-neon-cyan/30 focus:bg-white/10 transition-all resize-none placeholder:text-white/10"
                     />
                   </div>
-                  <div className="flex justify-end">
+
+                  {validationErrors && (
+                    <p className="text-neon-red text-[10px] font-black uppercase tracking-widest text-center animate-pulse">
+                      {validationErrors}
+                    </p>
+                  )}
+
+                  <div className="flex items-center gap-4 mt-4">
                     <button
                       type="button"
                       onClick={closeModal}
-                      className="mr-2 text-gray-800 hover:text-gray-800 font-medium"
+                      className="flex-1 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-colors"
                     >
-                      Cancel
+                      Bypass
                     </button>
                     <button
                       type="submit"
-                      className={`bg-${selectedTheme} ${
-                        !isLoading
-                          ? `hover:bg-${selectedTheme}-50 active:translate-y-[1px]`
-                          : `bg-opacity-50 cursor-not-allowed`
-                      } text-white text-center font-bold py-2 px-4 rounded`}
                       disabled={isLoading}
+                      className={`
+                        flex-[2] py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest
+                        ${isLoading ? "bg-white/10 text-white/20" : `bg-white text-black hover:scale-[1.02] active:scale-95`}
+                        transition-all duration-300 shadow-xl
+                      `}
                     >
-                      Create
+                      {isLoading ? "Syncing..." : "Initialize Archive"}
                     </button>
                   </div>
                 </form>
-                {validationErrors && (
-                  <span className="block text-sm mt-2 text-center font-bold saturate-100 text-red-500">
-                    {validationErrors}
-                  </span>
-                )}
               </div>
-            </div>
+            </motion.div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

@@ -10,19 +10,25 @@ const cloudinary = require("../config/cloudinary");
 const getAllSongs = asyncHandler(async (req, res) => {
   const page = parseInt(req.query.page || 1);
   const limit = parseInt(req.query.limit);
+  const search = req.query.search || "";
   const startIndex = (page - 1) * limit;
+
+  const query = search ? { title: { $regex: search, $options: "i" } } : {};
+
   const [songs, total] = await Promise.all([
-    Song.find({})
+    Song.find(query)
       .skip(startIndex)
       .limit(limit)
       .populate("artiste", "name")
       .lean(),
-    Song.countDocuments(),
+    Song.countDocuments(query),
   ]);
+
   if (!songs.length) {
     return res.status(404).json({ message: "No songs found" });
   }
-  const shuffledSongs = shuffleArray(songs);
+
+  const shuffledSongs = search ? songs : shuffleArray(songs);
   res.status(200).json({ songs: shuffledSongs, total });
 });
 

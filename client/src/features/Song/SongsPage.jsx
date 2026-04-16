@@ -11,12 +11,14 @@ import { Helmet } from "react-helmet-async";
 const SongsPage = () => {
   const [searchParams] = useSearchParams({ page: 1 });
   const page = searchParams.get("page");
+  const search = searchParams.get("search");
+  
   const {
     data: { songs, total } = {},
     isLoading,
     isError,
     error,
-  } = useGetAllSongsQuery({ page: page ?? 1, limit: 8 });
+  } = useGetAllSongsQuery({ page: page ?? 1, limit: 12, search: search ?? "" });
   const location = useLocation();
   const { pathname } = location;
 

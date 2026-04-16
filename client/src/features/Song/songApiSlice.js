@@ -3,10 +3,11 @@ import { apiSlice } from "../../app/apiSlice";
 export const songApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAllSongs: builder.query({
-      query: ({ page, limit }) => {
+      query: ({ page, limit, search }) => {
         const params = new URLSearchParams();
         if (page) params.append("page", page);
         if (limit) params.append("limit", limit);
+        if (search) params.append("search", search);
         const queryString = params.toString();
         return queryString ? `/api/songs?${queryString}` : "/api/songs";
       },
