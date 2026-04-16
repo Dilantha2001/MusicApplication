@@ -151,6 +151,11 @@ const getAnySong = asyncHandler(async (req, res) => {
 // @route POST api/songs/upload
 // @access Private
 const uploadSong = asyncHandler(async (req, res) => {
+  console.log("Check Credentials: ", {
+    cloud: process.env.CLOUD_NAME,
+    key: process.env.API_KEY,
+    secret: process.env.API_SECRET ? "Thiyenawa" : "Na!",
+  });
   const { title, artiste, album, genre, duration, releaseDate, lyrics } =
     req.body;
 
@@ -167,7 +172,10 @@ const uploadSong = asyncHandler(async (req, res) => {
       const stream = cloudinary.uploader.upload_stream(
         options,
         (error, result) => {
-          if (error) return reject(error);
+          if (error) {
+            console.log("\n🔥 CLOUDINARY FULL ERROR 🔥\n", error, "\n"); // <-- Me line eka add karanna
+            return reject(error);
+          }
           resolve(result);
         },
       );
@@ -177,7 +185,7 @@ const uploadSong = asyncHandler(async (req, res) => {
   // Upload audio (Cloudinary uses resource_type "video" for audio files)
   const audioResult = await uploadToCloudinary(req.files.audio[0].buffer, {
     resource_type: "video",
-    folder: "neon-music/audio",
+    // folder: "neon-music/audio",
   });
 
   // Upload cover image if provided
