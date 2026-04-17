@@ -5,9 +5,8 @@ Experience the next generation of musical immersion. **Neon Music** is a high-pe
 ![Neon Music Hero](./image.png)
 
 ## 🌌 The Vision
-Neon Music isn't just a player; it's a **curated ecosystem**. Utilizing a cutting-edge "Green-Theme" modernization, the platform features glassmorphic interfaces, 3D-inspired scroll aesthetics, and a dynamic "Grid" network status.
 
-[Visit the Live Grid](https://neon-music.vercel.app)
+Neon Music isn't just a player; it's a **curated ecosystem**. Utilizing a cutting-edge "Green-Theme" modernization, the platform features glassmorphic interfaces, 3D-inspired scroll aesthetics, and a dynamic "Grid" network status.
 
 ---
 
@@ -25,6 +24,7 @@ Neon Music isn't just a player; it's a **curated ecosystem**. Utilizing a cuttin
 ## 🛠️ Tech Stack
 
 ### Frontend (The Interface)
+
 - **React 18 & Vite**: Lightning-fast development and optimized production builds.
 - **Redux Toolkit & RTK Query**: Enterprise-grade state management and efficient data fetching.
 - **Framer Motion**: Smooth, cinematic animations and micro-interactions.
@@ -32,6 +32,7 @@ Neon Music isn't just a player; it's a **curated ecosystem**. Utilizing a cuttin
 - **React Helmet Async**: Optimized SEO and dynamic metadata for every route.
 
 ### Backend (The Core)
+
 - **Node.js & Express**: High-concurrency server architecture.
 - **MongoDB & Mongoose**: Scalable, document-oriented data persistence.
 - **Cloudinary / Multer**: Secure and optimized media storage and processing.
@@ -42,14 +43,17 @@ Neon Music isn't just a player; it's a **curated ecosystem**. Utilizing a cuttin
 ## 🛰️ Getting Started
 
 ### 1. Clone the Transmission
-```bash 
+
+```bash
 git clone https://github.com/Dilantha2001/MusicApplication.git
 cd MusicApplication
 ```
 
 ### 2. Configure Environment
+
 **Server Configuration (`/server/.env`):**
-```env 
+
+```env
 PORT = 4000
 DB_STRING = your_mongodb_connection_string
 JWT_SECRET = your_jwt_secret
@@ -59,12 +63,15 @@ API_SECRET = your_cloudinary_secret
 ```
 
 **Client Configuration (`/client/.env`):**
+
 ```env
-VITE_JOLLIFY_BACKEND = http://localhost:4000
+VITE_NeonMusic_BACKEND = http://localhost:4000
 ```
 
 ### 3. Initialize Nodes
+
 **Backend Initiation:**
+
 ```bash
 cd server
 npm install
@@ -72,6 +79,7 @@ npm run dev
 ```
 
 **Frontend Initiation:**
+
 ```bash
 cd client
 npm install
@@ -91,7 +99,9 @@ Visit `http://localhost:5173` to initiate your stream.
 ---
 
 ## 📝 Contribution
-Join the grid and help us evolve the sound. 
+
+Join the grid and help us evolve the sound.
+
 1. **Fork** the repository.
 2. Create your **Feature Branch** (`git checkout -b feature/Evolution`).
 3. **Commit** your changes.
@@ -100,7 +110,4 @@ Join the grid and help us evolve the sound.
 
 ---
 
-## 📜 License
-Neon Music is licensed under the **ISC License**.
-
-Developed with ⚡ by the Neon Network Team.
+Developed with ⚡ Dilantha Ranaweera.
