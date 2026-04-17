@@ -1,181 +1,106 @@
-# Jollify
+# ⚡ NEON MUSIC | SOUND EVOLVED
 
-Jollify is a full-stack MERN (MongoDB, Express.js, React, Node.js) music streaming application. This project aims to create an immersive music listening experience with features like song streaming, playlist creation, artiste exploration, and more. <a href="https://jollify.vercel.app" target="_blank">See it here</a>
+Experience the next generation of musical immersion. **Neon Music** is a high-performance, cinematic MERN-stack streaming platform designed for the digital explorer. Built with a futuristic aesthetic and a focus on raw auditory essence, it redefines how you interact with sound.
 
-![Home](./jollify_1.jpg)
+![Neon Music Hero](./image.png)
 
-## Features
-- **Song Streaming**: Enjoy a seamless streaming experience with the ability to listen to your favorite songs anytime, anywhere.
-- **Playlist Creation**: Create and manage personal playlists by curating a collection of your preferred songs. Organize your music in a way that suits your mood or activity.
-- **Artiste Exploration**: Discover new music by exploring artiste profiles. Gain insights into artiste backgrounds, view cover images, and explore their discography to find hidden gems.
-- **Album Details**: Access detailed information about albums, including tracklists and cover art. Dive deep into the world of your favorite albums and explore the richness of each musical collection.
-- **Secure Authentication**: Jollify prioritizes user security by providing a secure authentication system. Users can create accounts, log in securely, and enjoy a personalized music experience.
-- **Third-Party Authentication**: Choose from a variety of authentication options, including Google, Facebook, and Twitter. The app allows users the flexibility to authenticate using their preferred third-party providers.
-- **Account Linking**: Users are not limited to a single authentication method. If the email address is the same, users can seamlessly switch between different authentication providers without losing their data.
-- **Interactive Comments**: Engage with the music community by adding comments to your favorite songs. Share your thoughts, recommendations, or connect with other users who share similar musical interests.
+## 🌌 The Vision
+Neon Music isn't just a player; it's a **curated ecosystem**. Utilizing a cutting-edge "Green-Theme" modernization, the platform features glassmorphic interfaces, 3D-inspired scroll aesthetics, and a dynamic "Grid" network status.
 
-## Technologies Used
-- React
-- Node
-- Express
-- MongoDB
-- Mongoose
-- Redux
-- RTK Query
-- JSON Web Tokens
-- Passport
-- Tailwind CSS
-- Cloudinary
-- AdminJS
-- ReCAPTCHA
-- AWS S3
+[Visit the Live Grid](https://neon-music.vercel.app)
 
-## Getting Started
-Follow these steps to set up and run the Jollify Music App locally on your machine.
+---
 
-### Prequisite
-Node and npm installed
+## 🚀 Core Features
 
-### Clone the Repository
+- **⚡ High-Fidelity Streaming**: Seamless, low-latency audio transmission optimized for the desktop and mobile grid.
+- **🎨 Cinematic UI/UX**: Ultra-modern aesthetic featuring immersive radial gradients, glassmorphism, and smooth Framer Motion transitions.
+- **🧬 The Grid Expansion**: Advanced exploration of Artistes, Albums, and Playlists with deep metadata integration.
+- **🛡️ Secure Persistence**: Robust authentication system with Redux-Persist integration for a seamless "always-on" experience.
+- **🔥 Dynamic Rankings**: Real-time "Neon Top 50" global transmissions showcasing the most trending nodes in the ecosystem.
+- **💬 Interactive Nodes**: Engage with the community through song commentary and collaborative interaction.
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend (The Interface)
+- **React 18 & Vite**: Lightning-fast development and optimized production builds.
+- **Redux Toolkit & RTK Query**: Enterprise-grade state management and efficient data fetching.
+- **Framer Motion**: Smooth, cinematic animations and micro-interactions.
+- **Tailwind CSS & Vanilla CSS**: A blend of utility-first flexibility and bespoke high-end styling.
+- **React Helmet Async**: Optimized SEO and dynamic metadata for every route.
+
+### Backend (The Core)
+- **Node.js & Express**: High-concurrency server architecture.
+- **MongoDB & Mongoose**: Scalable, document-oriented data persistence.
+- **Cloudinary / Multer**: Secure and optimized media storage and processing.
+- **JWT & Bcrypt**: Industry-standard security and authentication.
+
+---
+
+## 🛰️ Getting Started
+
+### 1. Clone the Transmission
 ```bash 
-git clone https://github.com/ojigs/jollify.git
-
-cd jollify
+git clone https://github.com/Dilantha2001/MusicApplication.git
+cd MusicApplication
 ```
 
-### Install Dependencies
-#### Frontend
-```bash
-cd client
-
-npm install
-```
-#### Backend 
-```bash
-cd server
-
-npm install
-```
-
-### Environment Variables
-Create a `.env` file in the config subdirectory of the server directory and set the following variables
+### 2. Configure Environment
+**Server Configuration (`/server/.env`):**
 ```env 
 PORT = 4000
-
 DB_STRING = your_mongodb_connection_string
-
-JWT_SECRET = your_JWT_secret
-
-CLOUD_NAME = your_cloudinary_cloudname
-
-API_KEY = your_cloudinary_api_key
-
-API_SECRET = your_cloudinary_api_secret
-
-GOOGLE_CLIENT_ID = your_google_client_id
-
-GOOGLE_CLIENT_SECRET = your_google_client_secret
-
-TWITTER_CONSUMER_KEY = your_twitter_consumer_key
-
-TWITTER_CONSUMER_SECRET = your_twitter_consumer_secret
-
-FACEBOOK_APP_ID = your_facebook_app_id
-
-FACEBOOK_APP_SECRET = your_facebook_app_secret
-
-RECAPTCHA_SECRET_KEY = your_recaptcha_secret_key
+JWT_SECRET = your_jwt_secret
+CLOUD_NAME = your_cloudinary_name
+API_KEY = your_cloudinary_key
+API_SECRET = your_cloudinary_secret
 ```
 
-Create a `.env` file in the client directory and set the following variables
+**Client Configuration (`/client/.env`):**
 ```env
-VITE_JOLLIFY_KEY = your_aws_s3_bucket_public_url
-
-VITE_RECAPTCHA_SITE_KEY = your_recaptcha_key
-
-VITE_JOLLIFY_BACKEND = your_server_locahost (e.g http://localhost:4000)
+VITE_JOLLIFY_BACKEND = http://localhost:4000
 ```
 
-### Run the Application
-#### Frontend  
-```bash 
-cd client
-
-npm run dev
-```
-#### Backend
-```bash 
+### 3. Initialize Nodes
+**Backend Initiation:**
+```bash
 cd server
-
+npm install
 npm run dev
 ```
 
-Visit `http://localhost:5173` in your browser to access Jollify.
+**Frontend Initiation:**
+```bash
+cd client
+npm install
+npm run dev
+```
 
-## Usage
-### User Authentication
-- Register a new account on the app
-- Login with your credentials
-### Explore Songs
-- Browse the Explore page to discover a variety of songs.
-- Play songs directly from the Explore page.
-- Access detailed information about songs
-### Playlists
-- Create your own playlists
-- Add songs to playlists.
-- Play entire playlists.
-### Albums and Artistes
-- Explore albums and artistes to find your favorite music.
-- Play songs from specific albums and artistes
-### Player Controls
-- Use the playbar to control playback.
-- Adjust volume and seek through songs.
+Visit `http://localhost:5173` to initiate your stream.
 
-## Deployment
-- Jollify is deployed on Vercel
-- Access it at https://jollify.vercel.app
+---
 
-## Contributing
-Contributions are welcome! Here's how you can contribute to the Jollify project:
+## 📸 Snapshots of the Grid
 
-1. **Fork the Repository**: Click the "Fork" button on the top right corner of this repository.
-2. **Clone Your Fork**: Open a terminal and run the following command to clone your fork to your local machine.
+![The Grid Interface](./image2.png)
 
-   ```bash
-   git clone https://github.com/your-username/jollify.git
-   ```
-4. **Create a New Branch**: Move into the project's directory and create a new branch for your contribution.
+![Artiste Exploration](./image3.png)
 
-   ```bash
-   cd jollify
-   
-   git checkout -b feature/your-feature-name
-   ```
-6. **Make Changes**: Make your desired changes to the codebase.
-7. **Commit Changes**: After making your changes, commit them with a descriptive commit message.
+---
 
-   ```bash
-   git add .
-   
-   git commit -m "Add your descriptive message here"
-   ```
-9. **Push Changes**: Push your changes to your forked repository.
+## 📝 Contribution
+Join the grid and help us evolve the sound. 
+1. **Fork** the repository.
+2. Create your **Feature Branch** (`git checkout -b feature/Evolution`).
+3. **Commit** your changes.
+4. **Push** to the branch.
+5. Open a **Pull Request**.
 
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-11. **Create a Pull Request**: Visit your fork on GitHub and create a new pull request from your branch to the main branch of the original repository.
-12. **Discuss and Improve**: Participate in discussions and address feedback if needed. Work with the maintainers to get your changes merged.
+---
 
-## Snapshots
-![Home](./jollify_2.jpg)
+## 📜 License
+Neon Music is licensed under the **ISC License**.
 
-![Home](./jollify_3.jpg)
-
-## Author
-Emmanuel Ojighoro <a href="https://www.twitter.com/emmaojigs" target="_blank">@emmaojigs</a> 
-
-https://ojigs.netlify.app
-
-## License
-Jollify is licensed under the ISC License. See [LICENSE](LICENSE) file for more details.
+Developed with ⚡ by the Neon Network Team.
