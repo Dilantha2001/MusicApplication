@@ -51,7 +51,7 @@ const CommentsSection = ({ comments, songId }) => {
             onChange={(e) => setNewComment(e.target.value.trim())}
           />
           {validationErrors && (
-            <span className="block text-sm mt-2 saturate-100 text-red-500">
+            <span className="block text-sm mt-2 saturate-100 text-rock">
               {validationErrors}
             </span>
           )}

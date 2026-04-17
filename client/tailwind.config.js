@@ -16,13 +16,13 @@ export default {
           200: "#181818",
           300: "#242424"
         },
-        pop: { DEFAULT: "#a631ff", 50: "#c77dff" },
-        rock: { DEFAULT: "#0d9488", 50: "#11beae" },
-        bubble: { DEFAULT: "#ed0eff", 50: "#ef2dff" },
+        pop: { DEFAULT: "#a3e635", 50: "#bef264" }, // Lime Green
+        rock: { DEFAULT: "#0d9488", 50: "#11beae" }, // Teal/Green
+        bubble: { DEFAULT: "#10b981", 50: "#34d399" }, // Emerald Green
         // 2026 Neon Palette
-        "neon-red": "#ff003c",
-        "neon-orange": "#ff4d00",
-        "neon-cyan": "#00f3ff",
+        "neon-red": "#22c55e", // Neon Green
+        "neon-orange": "#16a34a", // Forest Green
+        "neon-cyan": "#4ade80", // Spring Green
         "glass": "rgba(255, 255, 255, 0.03)",
         "glass-border": "rgba(255, 255, 255, 0.08)",
       },
@@ -46,7 +46,8 @@ export default {
         },
       },
       backgroundImage: {
-        "mesh-gradient": "radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%)",
+        "mesh-gradient": "radial-gradient(at 0% 0%, hsla(160,80%,10%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(150,80%,5%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(170,80%,10%,1) 0, transparent 50%)",
+        "green-mesh-gradient": "radial-gradient(at 0% 0%, hsla(160,80%,10%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(150,80%,5%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(170,80%,10%,1) 0, transparent 50%)",
       },
     },
   },

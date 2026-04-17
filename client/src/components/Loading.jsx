@@ -2,10 +2,7 @@ import { useSelector } from "react-redux";
 
 const Loading = () => {
   const selectedTheme = useSelector((state) => state.theme);
-  const image =
-    selectedTheme === "rock"
-      ? "https://res.cloudinary.com/ojigs/image/upload/v1696593675/NeonMusic/neon_music_rock.gif"
-      : "https://res.cloudinary.com/ojigs/image/upload/v1696593603/NeonMusic/neon_music_pop.gif";
+  const image = "https://res.cloudinary.com/ojigs/image/upload/v1696593675/NeonMusic/neon_music_rock.gif";
 
   return (
     <div className="h-full flex justify-center items-center">

@@ -1,10 +1,12 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaPlay } from "react-icons/fa";
+import { FaPlay, FaMicrophoneAlt, FaCloudUploadAlt } from "react-icons/fa";
 import background from "../../assets/bg.png";
+
 const HomeBanner = () => {
   const selectedTheme = useSelector((state) => state.theme);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -13,156 +15,142 @@ const HomeBanner = () => {
 
   return (
     <motion.section
-      initial={{ opacity: 0, scale: 0.95 }}
+      initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-      className="relative h-[500px] md:h-[600px] rounded-[40px] overflow-hidden flex items-center group shadow-2xl"
+      transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+      className="relative h-[600px] md:h-[700px] rounded-[48px] overflow-hidden flex items-center group shadow-2xl border border-white/5"
     >
-      {/* Dynamic Background Image */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* Cinematic Background Layer */}
+      <div className="absolute inset-0 z-0">
         <motion.div
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          animate={{ scale: [1, 1.05, 1], filter: ["brightness(1)", "brightness(1.2)", "brightness(1)"] }}
+          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
           className="w-full h-full bg-cover bg-center"
           style={{
             backgroundImage: `url(${background})`,
             backgroundSize: "cover",
           }}
         />
-        {/* Cinematic Overlays */}
-        {/* <div className="absolute inset-0 bg-black/40 backdrop-grayscale-[0.2]" />
-        <div
-          className={`absolute inset-0 bg-gradient-to-r from-primary via-primary/60 to-transparent`}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent" />
-        <div
-          className={`absolute inset-0 ring-1 ring-inset ring-white/10 rounded-[40px]`}
-        /> */}
+        {/* Dynamic Overlays */}
+        {/* <div className="absolute inset-0 bg-black/40 backdrop-blur-[1px]" />
+        <div className={`absolute inset-0 bg-gradient-to-r from-primary via-primary/50 to-transparent`} />
+        <div className="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-primary/20" /> */}
       </div>
 
-      {/* Floating Particles/Notes */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
-        <div
-          className={`absolute top-1/4 left-1/4 w-96 h-96 bg-${selectedTheme}/20 rounded-full blur-[120px] animate-pulse-slow`}
-        />
-        <div
-          className={`absolute bottom-1/4 right-1/4 w-64 h-64 bg-neon-cyan/10 rounded-full blur-[80px] animate-none`}
-        />
-      </div>
-
-      {/* Content Container */}
-      <div className="relative z-10 w-full px-8 md:px-16 flex flex-col items-start gap-8">
-        {/* Eyebrow */}
+      {/* Floating Particles & Auras */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-60">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          animate={{
+            x: [0, 50, -50, 0],
+            y: [0, -30, 30, 0],
+          }}
+          transition={{ duration: 20, repeat: Infinity }}
+          className={`absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-rock/30 rounded-full blur-[160px]`}
+        />
+        <motion.div
+          animate={{
+            x: [0, -40, 40, 0],
+            y: [0, 40, -40, 0],
+          }}
+          transition={{ duration: 25, repeat: Infinity }}
+          className={`absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-neon-cyan/20 rounded-full blur-[140px]`}
+        />
+      </div>
+
+      {/* Content Layer */}
+      <div className="relative z-10 w-full px-8 md:px-20 lg:px-24 flex flex-col items-start">
+        {/* Futuristic Badge */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="flex items-center gap-3 px-4 py-2 rounded-2xl glass border-white/10"
+          transition={{ delay: 0.4, duration: 0.8 }}
+          className="flex items-center gap-3 px-5 py-2.5 rounded-2xl glass border-white/10 mb-8"
         >
-          <div className="relative">
-            <span
-              className={`block w-2.5 h-2.5 rounded-full bg-${selectedTheme} shadow-[0_0_12px_rgba(255,255,255,0.8)]`}
-            />
-            <span
-              className={`absolute inset-0 rounded-full bg-${selectedTheme} animate-ping opacity-40`}
-            />
+          <div className="relative flex h-3 w-3">
+            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full bg-rock opacity-75`}></span>
+            <span className={`relative inline-flex rounded-full h-3 w-3 bg-rock shadow-[0_0_15px_#11beae]`}></span>
           </div>
-          <span className="text-[10px] uppercase tracking-[0.3em] font-black text-white/80 font-outfit">
-            Live in the Future
+          <span className="text-[11px] uppercase tracking-[0.4em] font-black text-white active-glow font-outfit">
+            Network Status: Optimized
           </span>
         </motion.div>
 
-        {/* Headline */}
-        <div className="max-w-2xl">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
+        {/* Massive Headline */}
+        <div className="max-w-4xl">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.8 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-black font-outfit tracking-tighter leading-[0.9] mb-6 select-none bg-cover bg-center bg-no-repeat bg-clip-text text-transparent"
-            style={{
-              backgroundImage: `url('/sound_evolved_bg.png')`,
-              backgroundColor: "#fff", // Fallback color
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              filter: "drop-shadow(0 0 20px rgba(0, 243, 255, 0.3))",
-            }}
+            transition={{ delay: 0.6, duration: 0.8 }}
+            className="flex flex-col gap-0"
           >
-            SOUND <br />
-            <span className="italic">EVOLVED.</span>
-          </motion.h1>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black font-outfit tracking-[calc(-0.05em)] leading-[0.85] text-white">
+              SOUND <br />
+              <span className={`text-transparent bg-clip-text bg-gradient-to-r from-rock to-neon-cyan italic drop-shadow-[0_0_30px_rgba(13,148,136,0.2)]`}>
+                EVOLVED.
+              </span>
+            </h1>
+          </motion.div>
 
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7, duration: 0.8 }}
-            className="text-lg md:text-xl text-white/40 font-medium leading-relaxed max-w-lg mb-4"
+            transition={{ delay: 0.8, duration: 0.8 }}
+            className="text-lg md:text-2xl text-white/40 font-medium leading-relaxed max-w-xl mt-8 mb-12"
           >
-            Experience the next generation of musical immersion. Curated for the
-            modern listener.
+            Reconnect with the raw essence of sound. A curated ecosystem for the next generation of musical explorers.
           </motion.p>
         </div>
 
-        {/* Call to Action */}
-        <div className="flex flex-wrap gap-4 mt-2">
+        {/* Dynamic CTA Section */}
+        <div className="flex flex-wrap gap-6">
           <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             onClick={handleClick}
             className={`
-              group relative flex items-center gap-4 px-10 py-5 rounded-3xl
-              bg-white text-black font-black font-outfit uppercase tracking-widest text-xs
-              hover:scale-105 active:scale-95 transition-all duration-300
-              shadow-2xl shadow-black/50
+              group relative flex items-center gap-5 px-12 py-6 rounded-3xl
+              bg-white text-black font-black font-outfit uppercase tracking-widest text-[13px]
+              transition-all duration-300 shadow-[0_20px_40px_rgba(0,0,0,0.4)]
             `}
           >
-            <div
-              className={`flex items-center justify-center w-8 h-8 rounded-xl bg-${selectedTheme} text-white group-hover:rotate-12 transition-transform`}
-            >
-              <FaPlay className="text-[10px] transform translate-x-[1px]" />
+            <div className={`flex items-center justify-center w-10 h-10 rounded-xl bg-rock text-white group-hover:rotate-[360deg] transition-transform duration-700`}>
+              <FaPlay className="text-sm translate-x-[1px]" />
             </div>
-            Initiate Stream
+            <span>Initiate stream</span>
+            <div className="absolute inset-0 rounded-3xl group-hover:ring-2 ring-white/50 ring-offset-4 ring-offset-transparent transition-all" />
           </motion.button>
 
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.8 }}
-            onClick={handleClick}
-            className="px-10 py-5 rounded-3xl glass text-white/80 font-black font-outfit uppercase tracking-widest text-xs hover:bg-white/10 transition-all border-white/5"
-          >
-            Data Logs
-          </motion.button>
+          {!isAuthenticated && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate("/signup")}
+              className="px-12 py-6 rounded-3xl glass text-white font-black font-outfit uppercase tracking-widest text-[13px] hover:bg-white/10 transition-all border-white/10 flex items-center gap-3"
+            >
+              <FaCloudUploadAlt className="text-xl text-rock" />
+              Join Grid
+            </motion.button>
+          )}
         </div>
       </div>
 
-      {/* Stats Overlay - Bottom Right */}
-      <div className="absolute right-12 bottom-12 hidden lg:flex gap-12 text-white/20 select-none">
-        <div className="flex flex-col">
-          <span className="text-3xl font-black font-outfit tracking-tight text-white/40">
-            24/7
-          </span>
-          <span className="text-[9px] uppercase tracking-[0.3em] font-bold">
-            Uptime
-          </span>
+      {/* Futuristic Nav Elements - Bottom Right */}
+      <div className="absolute right-12 bottom-12 hidden xl:flex items-end gap-16 select-none">
+        <div className="flex flex-col gap-2 border-l border-white/10 pl-6 py-2">
+          <div className="flex items-center gap-3">
+            <FaMicrophoneAlt className="text-rock text-xl animate-pulse" />
+            <span className="text-4xl font-black font-outfit text-white/80">4.2K</span>
+          </div>
+          <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/20">Active Nodes</span>
         </div>
-        <div className="flex flex-col">
-          <span className="text-3xl font-black font-outfit tracking-tight text-white/40">
-            88K+
-          </span>
-          <span className="text-[9px] uppercase tracking-[0.3em] font-bold">
-            Nodes
-          </span>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-3xl font-black font-outfit tracking-tight text-white/40">
-            12ms
-          </span>
-          <span className="text-[9px] uppercase tracking-[0.3em] font-bold">
-            Latency
-          </span>
+        <div className="flex flex-col gap-2 border-l border-white/10 pl-6 py-2">
+          <span className="text-4xl font-black font-outfit text-white/80">99.9%</span>
+          <span className="text-[10px] uppercase tracking-[0.3em] font-bold text-white/20">Sync Rate</span>
         </div>
       </div>
+
+      {/* Background Grid Pattern Overlay */}
+      <div className="absolute inset-0 z-[1] opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
     </motion.section>
   );
 };

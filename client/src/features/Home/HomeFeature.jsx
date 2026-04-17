@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaPlay } from "react-icons/fa";
+import { FaPlay, FaBolt } from "react-icons/fa";
 import { AiOutlineLoading } from "react-icons/ai";
+import { motion } from "framer-motion";
 import ErrorMsg from "../../components/ErrorMsg";
 import { useGetAnySongQuery } from "../Song/songApiSlice";
 import LikeButton from "../../components/LikeButton";
@@ -23,116 +24,136 @@ const HomeFeature = () => {
   };
 
   return (
-    <section className="relative mt-10 text-gray-200">
+    <section className="relative mt-20 text-gray-200">
       {/* Section label */}
-      <div className="mb-5">
-        <p className="text-[10px] uppercase tracking-[0.25em] text-gray-500 font-semibold mb-1">
-          Picked for you
-        </p>
-        <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white leading-none">
-          Featured
-        </h2>
+      <div className="flex items-center gap-3 mb-8">
+        <div className="bg-rock/20 p-2 rounded-xl">
+             <FaBolt className="text-rock text-xs shadow-[0_0_10px_#11beae]" />
+        </div>
+        <div>
+            <p className="text-[10px] uppercase tracking-[0.4em] text-white/30 font-black font-outfit">
+                AI Curator
+            </p>
+            <h2 className="text-3xl font-black tracking-tight text-white leading-none font-outfit">
+                PULSE <span className="text-rock">SYNC.</span>
+            </h2>
+        </div>
       </div>
 
       {/* Loading */}
       {isLoading ? (
-        <div className="flex justify-center items-center h-52 rounded-2xl bg-white/[0.03] ring-1 ring-white/[0.06]">
-          <AiOutlineLoading className="text-3xl animate-spin text-gray-600" />
+        <div className="flex justify-center items-center h-64 rounded-[3rem] glass">
+          <AiOutlineLoading className="text-4xl animate-spin text-rock" />
         </div>
       ) : isError ? (
-        <div className="h-52">
+        <div className="h-64">
           <ErrorMsg error={error} />
         </div>
       ) : (
-        <article className="relative rounded-2xl overflow-hidden h-56 md:h-64 flex">
+        <motion.article 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="relative rounded-[3rem] overflow-hidden h-72 md:h-80 flex group shadow-2xl border border-white/5"
+        >
           {/* ── Background: blurred artist image ── */}
-          <div className="absolute inset-0">
+          <div className="absolute inset-0 z-0">
             <img
               src={song?.artiste.image}
               alt={song?.artiste.name}
-              className="w-full h-full object-cover object-center scale-110"
+              className="w-full h-full object-cover object-center scale-110 blur-[2px] transition-transform duration-1000 group-hover:scale-100"
             />
             {/* Multi-layer overlay for depth */}
             <div className="absolute inset-0 bg-black/60" />
-            <div className={`absolute inset-0 bg-${selectedTheme}/30`} />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-transparent" />
+            <div className={`absolute inset-0 bg-gradient-to-t from-primary via-primary/40 to-transparent`} />
+            <div className={`absolute inset-0 bg-gradient-to-r from-primary via-transparent to-transparent`} />
           </div>
 
           {/* ── Sharp artist image on the right (large screens) ── */}
-          <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-2/5">
+          <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-2/5 z-[1]">
             <img
               src={song?.artiste.image}
               alt={song?.artiste.name}
-              className="w-full h-full object-cover object-top"
+              className="w-full h-full object-cover object-top transition-transform duration-1000 group-hover:scale-105"
             />
             {/* Fade into the dark overlay from left */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/20 to-transparent" />
           </div>
 
           {/* ── Content ── */}
-          <div className="relative z-10 flex flex-col justify-between p-6 md:p-10 w-full lg:w-3/5">
+          <div className="relative z-10 flex flex-col justify-center p-8 md:p-14 w-full lg:w-3/5">
             {/* Top: meta */}
-            <div className="flex flex-col gap-1">
-              <p className="text-[10px] uppercase tracking-[0.2em] text-white/40 font-semibold">
-                Featured Track
-              </p>
-              <h2 className="text-xl md:text-2xl font-black leading-tight text-white truncate">
+            <div className="flex flex-col gap-2">
+              <motion.div
+                 initial={{ opacity: 0, x: -10 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 w-fit"
+              >
+                 <span className="w-1.5 h-1.5 rounded-full bg-rock animate-pulse" />
+                 <p className="text-[9px] uppercase tracking-[0.3em] text-white/60 font-black font-outfit">
+                    Algorithm Pick
+                 </p>
+              </motion.div>
+              
+              <h2 className="text-3xl md:text-5xl font-black leading-none text-white truncate font-outfit tracking-tighter">
                 <Link
                   to={`/artistes/${song?.artiste._id}`}
-                  className="hover:underline decoration-2 underline-offset-4 decoration-white/60 transition-colors hover:text-white/80"
+                  className="hover:text-rock transition-colors"
                 >
                   {song?.artiste.name}
                 </Link>
-                <span className="text-white/30 font-normal mx-2">·</span>
+                <span className="text-white/20 font-light mx-4 italic">&</span>
                 <Link
-                  to={`/albums/${song?.album._id}`}
-                  className="text-white/60 font-semibold hover:text-white/90 hover:underline decoration-2 underline-offset-4 decoration-white/40 transition-colors"
+                  to={`/songs/${song._id}`}
+                  className="hover:underline decoration-rock decoration-4 underline-offset-8 transition-all"
                 >
-                  {song?.album.title}
+                  {song?.title}
                 </Link>
               </h2>
-              <Link
-                to={`/songs/${song._id}`}
-                className={`text-base md:text-lg font-semibold text-${selectedTheme} hover:underline decoration-2 underline-offset-4 transition-colors truncate`}
-              >
-                {song?.title}
-              </Link>
+              
+              <p className="text-sm md:text-lg text-white/40 font-medium max-w-md mt-4">
+                 Streaming from <span className="text-white/60 font-bold">{song?.album.title}</span>. Experience high-fidelity audio logs from the sector.
+              </p>
             </div>
 
             {/* Bottom: actions */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6 mt-10">
               {/* Play button */}
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={handlePlay}
                 className={`
-                  flex items-center justify-center
-                  w-11 h-11 rounded-full
-                  bg-white text-black
-                  hover:scale-105 active:scale-95
-                  transition-transform duration-150 shadow-lg shadow-black/40
+                  flex items-center justify-center gap-3
+                  px-8 py-4 rounded-2xl
+                  bg-white text-black font-black font-outfit uppercase tracking-widest text-xs
+                  shadow-xl shadow-black/40
                 `}
-                title="Play"
               >
-                <FaPlay className="text-sm translate-x-[1px]" />
-              </button>
+                <FaPlay className="text-[10px] translate-x-[1px]" />
+                Start Protocol
+              </motion.button>
 
               {/* Like button */}
-              <div
+              <motion.div
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
                 className={`
                   flex items-center justify-center
-                  w-11 h-11 rounded-full
-                  bg-white/10 backdrop-blur-sm
-                  ring-1 ring-white/10
-                  hover:bg-white/20 hover:scale-105 active:scale-95
-                  transition-all duration-150
+                  w-14 h-14 rounded-2xl
+                  glass hover:bg-white/10 transition-colors
                 `}
               >
                 <LikeButton songId={song._id} type={"song"} />
-              </div>
+              </motion.div>
             </div>
           </div>
-        </article>
+          
+          {/* Decorative Corner Element */}
+          <div className="absolute top-0 right-0 p-8 hidden md:block opacity-20 group-hover:opacity-40 transition-opacity">
+               <div className="w-16 h-16 border-t-2 border-r-2 border-white/40 rounded-tr-3xl" />
+          </div>
+        </motion.article>
       )}
     </section>
   );

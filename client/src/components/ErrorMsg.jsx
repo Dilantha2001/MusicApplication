@@ -19,7 +19,7 @@ const ErrorMsg = ({ error }) => {
         <p className="text-gray-400">{errorMessage}</p>
       ) : (
         <>
-          <BiErrorCircle className="text-red-500 text-3xl" />
+          <BiErrorCircle className="text-rock text-3xl" />
           <h1 className="text-lg">An error has occured</h1>
         </>
       )}

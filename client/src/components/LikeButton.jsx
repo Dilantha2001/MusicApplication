@@ -131,7 +131,7 @@ const LikeButton = ({ songId, albumId, artisteId, playlistId, type }) => {
         title={isArtiste ? "Follow" : "Add to favorite"}
       >
         {liked ? (
-          <FaHeart className="text-red-500" />
+          <FaHeart className="text-rock" />
         ) : (
           <FaRegHeart className="" />
         )}

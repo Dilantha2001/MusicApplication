@@ -71,7 +71,7 @@ const AddToPlaylistModal = ({ children }) => {
               <div className="absolute top-0 right-0 pt-2 pr-4">
                 <button
                   onClick={closeModal}
-                  className="text-gray-800 hover:text-gray-200 hover:bg-red-500"
+                  className="text-gray-800 hover:text-gray-200 hover:bg-rock"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

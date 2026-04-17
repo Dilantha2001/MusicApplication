@@ -12,6 +12,7 @@ import CreatePlaylistModal from "../features/Studio/MyPlaylists/CreatePlaylistMo
 
 const Layout = () => {
   const { currentSong } = useSelector((state) => state.player);
+  const { isAuthenticated } = useSelector((state) => state.auth);
   const location = useLocation();
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const Layout = () => {
   return (
     <div className="relative min-h-screen bg-primary font-inter">
       {/* Background Cinematic Mesh - Fixed */}
-      <div className="fixed inset-0 z-0 bg-mesh-gradient opacity-60 pointer-events-none" />
+      <div className={`fixed inset-0 z-0 ${isAuthenticated ? "bg-mesh-gradient" : "bg-green-mesh-gradient"} opacity-60 pointer-events-none transition-all duration-1000`} />
 
       <div className="relative z-10 flex flex-col md:flex-row h-screen overflow-hidden">
         {/* Sidebar Navigation */}

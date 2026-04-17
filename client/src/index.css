@@ -10,31 +10,90 @@
   }
 
   body {
-    background-image: 
-      radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-      radial-gradient(at 50% 0%, hsla(225,39%,10%,1) 0, transparent 50%), 
-      radial-gradient(at 100% 0%, hsla(339,49%,10%,1) 0, transparent 50%);
+    background-image:
+      radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
+      radial-gradient(at 50% 0%, hsla(225, 39%, 10%, 1) 0, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(160, 80%, 10%, 1) 0, transparent 50%);
     background-attachment: fixed;
     font-family: 'Inter', sans-serif;
     @apply bg-primary text-white antialiased;
   }
 
   ::selection {
-    background-color: rgba(255, 0, 60, 0.3);
+    background-color: rgba(13, 148, 136, 0.3);
     color: white;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Outfit', sans-serif;
     @apply tracking-tight;
   }
 }
 
 @layer utilities {
+
+  /* Theme Overrides - Ensuring Green Theme */
+  .bg-pop {
+    background-color: #10b981 !important;
+  }
+
+  .text-pop {
+    color: #10b981 !important;
+  }
+
+  .border-pop {
+    border-color: #10b981 !important;
+  }
+
+  .shadow-pop {
+    --tw-shadow-color: #10b981 !important;
+  }
+
+  .bg-bubble {
+    background-color: #10b981 !important;
+  }
+
+  .text-bubble {
+    color: #10b981 !important;
+  }
+
+  .border-bubble {
+    border-color: #10b981 !important;
+  }
+
+  .bg-neon-red {
+    background-color: #22c55e !important;
+  }
+
+  .text-neon-red {
+    color: #22c55e !important;
+  }
+
+  .bg-neon-orange {
+    background-color: #16a34a !important;
+  }
+
+  .text-neon-orange {
+    color: #16a34a !important;
+  }
+
+  .bg-neon-cyan {
+    background-color: #4ade80 !important;
+  }
+
+  .text-neon-cyan {
+    color: #4ade80 !important;
+  }
+
   .glass {
     @apply bg-white/5 backdrop-blur-xl border border-white/10;
   }
-  
+
   .glass-card {
     @apply bg-secondary-100/40 backdrop-blur-md border border-white/5 hover:border-white/20 transition-all duration-500;
   }
@@ -47,9 +106,11 @@
   ::-webkit-scrollbar {
     width: 6px;
   }
+
   ::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
+
   ::-webkit-scrollbar-thumb {
     @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
   }
